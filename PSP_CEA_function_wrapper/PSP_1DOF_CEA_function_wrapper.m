@@ -59,8 +59,7 @@ inp('type') = 'eq';             % Sets the type of CEA calculation (equilibrium 
 inp('p') = p_c;                 % Chamber pressure
 inp('pip') = p_c / p_ex;        % chamber pressure -> P_c / P_ex
 inp('p_unit') = 'psi';          % Chamber pressure units
-inp('fuel') = {'C2H5OH(L)', 'C8H18(L),isooct'};         % Set Fuel
-inp('fuel_wt%') = [98, 2]; % set percentage of fuel/water mixture
+inp('fuel') = {'RP-1'};         % Set Fuel
 inp('ox') = {'O2(L)'};          % Set Oxidizer
 inp('o/f') = O_F;               % Set O/F ratio
 
