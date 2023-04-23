@@ -1,4 +1,31 @@
 %AAE338 Project
+
+clear;
+clc;
+close all;
+
+
+%% CEA
+CEAPath = append(pwd, '/PSP_CEA_function_wrapper');
+INPPath = append(pwd, '/INP_OUT');
+addpath(CEAPath);
+addpath(INPPath);
+
+pressureExit = 5; %psia
+pressureChamber = 300; %psia
+OF = 2;
+nameString = strcat('338_estimates_pip_', num2str(int8(pressureChamber / pressureExit)), '_p_c_', num2str(pressureChamber), '_O_F_', num2str(OF));
+
+inputName = append(nameString, '.inp');
+outputName = append(nameString, '.out');
+
+[Isp, CStar, expansionRatio, specificHeatRatio, combustionTemperature, ~, ~, ~, ~] = PSP_1DOF_CEA_function_wrapper(pressureChamber,pressureExit, OF, nameString, 0);
+movefile(inputName, 'INP_OUT');
+movefile(outputName, 'INP_OUT');
+delete(append(pwd, '\PSP_CEA_function_wrapper\', inputName));
+
+
+
 %Combustion Gases - RP1/Lox, mixture ratio 2.35, Molar Mass 10.20583
 %kg/mol
 gma = 1.222;
@@ -82,3 +109,8 @@ grid on;
 title('Nozzle Qdot Distribution')
 xlabel("Area Ratio [A/At]")
 ylabel('Qdot')
+
+clear CEApath INPPath
+
+restoredefaultpath;
+clear RESTOREDEFAULTPATH_EXECUTED
