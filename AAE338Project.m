@@ -14,6 +14,7 @@ addpath(INPPath);
 pressureExit = 5; %psia
 pressureChamber = 300; %psia
 OF = 2;
+mdot = 5; %kg/s
 nameString = strcat('338_estimates_pip_', num2str(int8(pressureChamber / pressureExit)), '_p_c_', num2str(pressureChamber), '_O_F_', num2str(OF));
 
 inputName = append(nameString, '.inp');
@@ -24,13 +25,13 @@ movefile(inputName, 'INP_OUT');
 movefile(outputName, 'INP_OUT');
 delete(append(pwd, '\PSP_CEA_function_wrapper\', inputName));
 
-
+Isp = Isp / 9.81; %seconds
 
 %Combustion Gases - RP1/Lox, mixture ratio 2.35, Molar Mass 10.20583
 %kg/mol
-gma = 1.222;
-P0 = 6894.76;
-T_cns = 3588.889;
+gma = specificHeatRatio;
+P0 = pressureChamber;
+T_cns = combustionTemperature; %K
 
 R = 8.314/10.20583;
 rho0 = P0/(R*T_cns);
