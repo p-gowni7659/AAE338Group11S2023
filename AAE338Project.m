@@ -11,7 +11,7 @@ INPPath = append(pwd, '/INP_OUT');
 addpath(CEAPath);
 addpath(INPPath);
 
-pressureExit = 5; %psia
+pressureExit = 3; %psia
 pressureChamber = 300; %psia
 OF = 2.35;
 mdot = 5; %kg/s
@@ -28,13 +28,14 @@ delete(append(pwd, '\PSP_CEA_function_wrapper\', inputName));
 Isp = Isp / 9.81; %seconds
 
 gma = specificHeatRatio;
-P0 = pressureChamber;
+P0 = pressureChamber * 6894.76;
 T_cns = combustionTemperature; %K
 
+R = P0 / (rho0 * T_cns);
 %As an example, used F1 Engine Epxanison Ratio of 16:1. Guessed Chamber
 %Area Ratio of 3:1 since it will change.
 Aratio_sub = linspace(3,1,200);
-Aratio_sup = linspace(1.01,16,3000);
+Aratio_sup = linspace(1.01,expansionRatio,3000);
 Aratio = [Aratio_sub,Aratio_sup];
 M_x = [];
 rho_x = [];
