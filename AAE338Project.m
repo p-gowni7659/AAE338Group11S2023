@@ -13,28 +13,24 @@ addpath(INPPath);
 
 pressureExit = 5; %psia
 pressureChamber = 300; %psia
-OF = 2;
+OF = 2.35;
 mdot = 5; %kg/s
 nameString = strcat('338_estimates_pip_', num2str(int8(pressureChamber / pressureExit)), '_p_c_', num2str(pressureChamber), '_O_F_', num2str(OF));
 
 inputName = append(nameString, '.inp');
 outputName = append(nameString, '.out');
 
-[Isp, CStar, expansionRatio, specificHeatRatio, combustionTemperature, cp, conductivity, enthalpy, rho] = PSP_1DOF_CEA_function_wrapper(pressureChamber,pressureExit, OF, nameString, 0);
+[Isp, CStar, expansionRatio, specificHeatRatio, combustionTemperature, cp, conductivity, enthalpy, rho0] = PSP_1DOF_CEA_function_wrapper(pressureChamber,pressureExit, OF, nameString, 0);
 movefile(inputName, 'INP_OUT');
 movefile(outputName, 'INP_OUT');
 delete(append(pwd, '\PSP_CEA_function_wrapper\', inputName));
 
 Isp = Isp / 9.81; %seconds
 
-%Combustion Gases - RP1/Lox, mixture ratio 2.35, Molar Mass 10.20583
-%kg/mol
 gma = specificHeatRatio;
 P0 = pressureChamber;
 T_cns = combustionTemperature; %K
 
-R = 8.314/10.20583;
-rho0 = P0/(R*T_cns);
 %As an example, used F1 Engine Epxanison Ratio of 16:1. Guessed Chamber
 %Area Ratio of 3:1 since it will change.
 Aratio_sub = linspace(3,1,200);

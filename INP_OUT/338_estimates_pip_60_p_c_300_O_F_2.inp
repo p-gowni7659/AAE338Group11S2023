@@ -3,8 +3,7 @@ problem rocket eq
     o/f = 2
     pip = 60
 reac
-    fuel = C2H5OH(L) wt% = 98.000
-    fuel = C8H18(L),isooct wt% = 2.000
+    fuel = RP-1
     ox = O2(L)
 outp trans
 end
