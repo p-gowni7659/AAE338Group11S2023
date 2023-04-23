@@ -4,8 +4,9 @@
 gma = 1.222;
 P0 = 6894.76;
 T_cns = 3588.889;
-rho0 = P0/(R*T_cns);
+
 R = 8.314/10.20583;
+rho0 = P0/(R*T_cns);
 %As an example, used F1 Engine Epxanison Ratio of 16:1. Guessed Chamber
 %Area Ratio of 3:1 since it will change.
 Aratio_sub = linspace(3,1,200);
@@ -70,6 +71,11 @@ grid on;
 title('Nozzle Temperature Gas Distribution [Correlation]')
 xlabel("Area Ratio [A/At]")
 ylabel('Gas Temperature [K]')
+figure()
+plot(Aratio, h_g_x)
+grid on;
+title('Nozzle Convective Heat Transfer Coeff Distribution')
+xlabel("Area Ratio [A/At]")
 figure()
 plot(Aratio, Qdot_x)
 grid on;
