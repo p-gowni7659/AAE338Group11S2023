@@ -20,7 +20,7 @@ nameString = strcat('338_estimates_pip_', num2str(int8(pressureChamber / pressur
 inputName = append(nameString, '.inp');
 outputName = append(nameString, '.out');
 
-[Isp, CStar, expansionRatio, specificHeatRatio, combustionTemperature, ~, ~, ~, ~] = PSP_1DOF_CEA_function_wrapper(pressureChamber,pressureExit, OF, nameString, 0);
+[Isp, CStar, expansionRatio, specificHeatRatio, combustionTemperature, cp, conductivity, enthalpy, rho] = PSP_1DOF_CEA_function_wrapper(pressureChamber,pressureExit, OF, nameString, 0);
 movefile(inputName, 'INP_OUT');
 movefile(outputName, 'INP_OUT');
 delete(append(pwd, '\PSP_CEA_function_wrapper\', inputName));
