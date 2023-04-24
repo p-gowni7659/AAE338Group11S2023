@@ -16,7 +16,7 @@ addpath(funcPath);
 pressureExit = 3; %psia
 pressureChamber = 300; %psia
 OF = 2.35;
-mdot = 5; %kg/s
+mdot = 10; %kg/s (iterate this variable?)
 nameString = strcat('338_estimates_pip_', num2str(int8(pressureChamber / pressureExit)), '_p_c_', num2str(pressureChamber), '_O_F_', num2str(OF));
 
 inputName = append(nameString, '.inp');
