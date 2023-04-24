@@ -8,10 +8,8 @@ close all;
 %% CEA
 CEAPath = append(pwd, '/PSP_CEA_function_wrapper');
 INPPath = append(pwd, '/INP_OUT');
-funcPath = append(pwd, '/funcs');
 addpath(CEAPath);
 addpath(INPPath);
-addpath(funcPath);
 
 pressureExit = 3; %psia
 pressureChamber = 300; %psia
@@ -110,9 +108,7 @@ title('Nozzle Qdot Distribution')
 xlabel("Area Ratio [A/At]")
 ylabel('Qdot')
 
-
-% Resets Matlabs Path preference so it doesn't mess up your matlab
-clear CEApath INPPath funcPath
+clear CEApath INPPath
 
 restoredefaultpath;
 clear RESTOREDEFAULTPATH_EXECUTED
@@ -127,5 +123,4 @@ diamt_inches = diamt*39.3701;
 chamber_contract = 4; %Empirical chamber contratiuon Ratio for Liquid-Liquid (3 in throat diameter)
 Dc = diamt * chamber_contract;
 num_channels = 20; %iterate this variable?
-Chamber_circum = pi*Dc;
-
+Chamber_circum = pi
