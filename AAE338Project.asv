@@ -16,7 +16,7 @@ addpath(funcPath);
 pressureExit = 3; %psia
 pressureChamber = 300; %psia
 OF = 2.35;
-mdot = 5; %kg/s (iterate this variable?)
+mdot = 10; %kg/s (iterate this variable?)
 nameString = strcat('338_estimates_pip_', num2str(int8(pressureChamber / pressureExit)), '_p_c_', num2str(pressureChamber), '_O_F_', num2str(OF));
 
 inputName = append(nameString, '.inp');
@@ -120,34 +120,25 @@ clear RESTOREDEFAULTPATH_EXECUTED
 %Chamber Cooling Rayliegh
 
 Lstar = 1.143; %meters, 45 in
-chan_ID = 0;
-chan_t = 0;
-At = (mdot*CStar)/P0; %m^2
-contrac = 3; %Empirical chamber contratiuon Ratio for Liquid-Liquid (3 in throat diameter)
-
-[chamber_L, contract_L, nozzle_L, cham_chan_num] = getChamberSize(At, contrac, expansionRatio, Lstar, chan_ID, chan_t);
-
-
 %Lc = 0.254; %Chamber length based on Huazel empirical correlations
-
+At = (mdot*CStar)/P0; %m^2
 diamt = 2*sqrt(At/pi);
 diamt_inches = diamt*39.3701;
-
-Dc = diamt * contrac;
+chamber_contract = 4; %Empirical chamber contratiuon Ratio for Liquid-Liquid (3 in throat diameter)
+Dc = diamt * chamber_contract;
 De = diamt * expansionRatio;
 num_channels = 20; %iterate this variable?
 Chamber_circum = pi*Dc;
 
-A = ((At ./ M_x) .* (((2 + (specificHeatRatio - 1) .* M_x .^ 2) ./ (specificHeatRatio + 1)) .^ ((specificHeatRatio + 1) ./ (2 .* (specificHeatRatio - 1)))));
-
-x = linspace(-(chamber_L + contract_L), nozzle_L, 3200);
-
+y = linspace(-De / 2, De / 2, 100);
+M = sqrt((2/(specificHeatRatio-1))*((1./expansionRatio)^2*(y./diamt).^2 - (1/expansionRatio)^2 + 1)^((specificHeatRatio-1)/specificHeatRatio)); % Mach number
+A = At*(1 + specificHeatRatio*M.^2).^(-1/(specificHeatRatio-1)); % nozzle area
 
 % Plot the cross-section
 figure()
-plot(x, A, 'LineWidth', 2);
+plot(y, A, 'LineWidth', 2);
 hold on;
-plot(x, (pi .* (Dc ./ 2) .^ 2)*ones(size(x)), 'k--', 'LineWidth', 1);
+plot(y, (pi )*ones(size(y)), 'k--', 'LineWidth', 1);
 xlabel('Radial distance (m)');
 ylabel('Area (m^2)');
 legend('Nozzle', 'Chamber');
