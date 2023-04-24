@@ -4,7 +4,7 @@ T_hw_guess = T_gas - 100;
 h_cg = 25; %Calculate from Nu
 
 tolerance = 10;
-step = 0.1;
+step = 100;
 
 trials = 100000;
 i = 1;
