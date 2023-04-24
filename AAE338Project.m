@@ -13,8 +13,8 @@ addpath(CEAPath);
 addpath(INPPath);
 addpath(funcPath);
 
-pressureExit = 3; %psia
-pressureChamber = 300; %psia
+pressureExit = 5; %psia
+pressureChamber = 150; %psia
 OF = 2.35;
 mdot = 5; %kg/s (iterate this variable?)
 nameString = strcat('338_estimates_pip_', num2str(int8(pressureChamber / pressureExit)), '_p_c_', num2str(pressureChamber), '_O_F_', num2str(OF));
@@ -145,10 +145,10 @@ x = linspace(-(chamber_L + contract_L), nozzle_L, 3200);
 
 % Plot the cross-section
 figure()
-plot(x, A, 'LineWidth', 2);
-hold on;
-plot(x, (pi .* (Dc ./ 2) .^ 2)*ones(size(x)), 'k--', 'LineWidth', 1);
+plot(x, sqrt(A/pi), 'LineWidth', 2);
+grid on
+yline(0)
 xlabel('Radial distance (m)');
-ylabel('Area (m^2)');
-legend('Nozzle', 'Chamber');
+ylabel('y (m)');
 title('Rocket Nozzle and Chamber Cross-Section');
+axis equal
