@@ -168,3 +168,5 @@ cython_debug/
 ~$Bang-Bang Duty Cycle Calcs.xlsx
 
 .DS_Store
+*.mexw64
+yprime.mexw64
