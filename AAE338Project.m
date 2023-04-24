@@ -8,8 +8,10 @@ close all;
 %% CEA
 CEAPath = append(pwd, '/PSP_CEA_function_wrapper');
 INPPath = append(pwd, '/INP_OUT');
+funcPath = append(pwd, '/funcs');
 addpath(CEAPath);
 addpath(INPPath);
+addpath(funcPath);
 
 pressureExit = 3; %psia
 pressureChamber = 300; %psia
@@ -108,7 +110,9 @@ title('Nozzle Qdot Distribution')
 xlabel("Area Ratio [A/At]")
 ylabel('Qdot')
 
-clear CEApath INPPath
+
+% Resets Matlabs Path preference so it doesn't mess up your matlab
+clear CEApath INPPath funcPath
 
 restoredefaultpath;
 clear RESTOREDEFAULTPATH_EXECUTED
