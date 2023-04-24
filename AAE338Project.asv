@@ -123,5 +123,4 @@ diamt_inches = diamt*39.3701;
 chamber_contract = 4; %Empirical chamber contratiuon Ratio for Liquid-Liquid (3 in throat diameter)
 Dc = diamt * chamber_contract;
 num_channels = 20; %iterate this variable?
-Chamber_circum = pi*Dc;
-
+Chamber_circum = pi
