@@ -1,8 +1,12 @@
 %AAE338 Project
 
+close all;
 clear;
 clc;
-close all;
+
+
+% Using CoolProp
+py.CoolProp.CoolProp.PropsSI('P', 'T', 298, 'Q', 0, 'water');
 
 
 %% CEA
