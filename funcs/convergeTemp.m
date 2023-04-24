@@ -1,6 +1,7 @@
 function [q_dot, T_cw, T_hw] = convergeTemp(T_gas, h_gas, k, wall_thick, T_i)
 
 T_hw_guess = T_gas;
+h_cg = 25;
 
 tolerance = 0.1;
 
@@ -9,7 +10,7 @@ i = 1;
 
 T_hw = T_hw_guess;
 
-while i <= trials
+while i < trials
 
     q_dot_hc = h_gas*(T_gas - T_hw);
 
@@ -20,6 +21,7 @@ while i <= trials
     if abs(q_dot_hc - q_dot_cc) <= tolerance
 
         q_dot = q_dot_cc;
+        i = trials;
 
     else
 
@@ -30,3 +32,5 @@ while i <= trials
     i = i + 1;
 
 end
+
+q_dot = 1;
