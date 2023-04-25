@@ -1,4 +1,4 @@
-function [] = coolinggrapher(M_hel_arr, qdot_arr, T_hw_arr, T_cw_arr, T_hel_arr, P_hel_arr, Aratio, x, A)
+function [] = coolinggrapher(M_hel_arr, qdot_arr, T_hw_arr, T_cw_arr, T_hel_arr, P_hel_arr, Aratio, x, A, T_gas, h_g_x, Qdot_x, M_x, rho_x, T_x, V_x)
 
 figure()
 plot(M_hel_arr, T_hel_arr)
