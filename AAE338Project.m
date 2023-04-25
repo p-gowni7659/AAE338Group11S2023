@@ -152,3 +152,6 @@ xlabel('Radial distance (m)');
 ylabel('y (m)');
 title('Rocket Nozzle and Chamber Cross-Section');
 axis equal
+
+%% Helium Initial Conditions/Loop
+%Initial Helium Pressure 
