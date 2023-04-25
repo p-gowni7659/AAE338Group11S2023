@@ -151,4 +151,8 @@ title('Rocket Nozzle and Chamber Cross-Section');
 axis equal
 
 %% Helium Initial Conditions/Loop
-%Initial Helium Pressure 
+%Initial Helium Pressure
+P0h = 5000000; %pa
+Chambertemp = 3000;
+%%
+
