@@ -165,7 +165,7 @@ axis equal
 Chambertemp = T_cns; %K
 heltemp_init = 200; %K
 helpress_init = 1000000;%Pa
-helmach_init = 0.01;
+helmach_init = 0.3;
 h_gas = h_g_x(1);
 k_wall = k;
 wall_thick = 2*chan_t;
@@ -290,12 +290,12 @@ Mmax = 1; % Max Mach number allowed in code
 steps_down = floor(2*contract_L / step); % Number of steps in the foor loop
 
 % Array initialization
-qdot_arr_cha = zeros(steps_down, 40);
-T_cw_arr_cha = zeros(steps_down, 40);
-T_hw_arr_cha = zeros(steps_down, 40);
-T_hel_arr_cha = zeros(steps_down, 40);
-P_hel_arr_cha = zeros(steps_down, 40);
-M_hel_arr_cha = zeros(steps_down, 40);
+qdot_arr_cha = zeros(steps_down, 1000);
+T_cw_arr_cha = zeros(steps_down, 1000);
+T_hw_arr_cha = zeros(steps_down, 1000);
+T_hel_arr_cha = zeros(steps_down, 1000);
+P_hel_arr_cha = zeros(steps_down, 1000);
+M_hel_arr_cha = zeros(steps_down, 1000);
 
 % Informs user L0oop is Running
 disp('Simulation Running...');
@@ -305,7 +305,7 @@ for j = 1:steps_down
     [hgas,area,Tgas,tubelen] = nozzleprops(chan_ID, A, h_g_x,...
         chan_t, j,T_gas,converge_num,contract_L,diverge_num, nozzle_L);
 
-    step_around = 0.01;
+    step_around = 0.002;
     steps_around = floor(tubelen/step_around);
 
     h_gas = hgas;
@@ -367,16 +367,31 @@ for j = 1:steps_down
 
 end
 M_hel_arr_cha(M_hel_arr_cha==0) = NaN;
+M_hel_arr_cha = M_hel_arr_cha(:,[1:200]);
 figure()
+title('Helium Mach')
 s = pcolor(M_hel_arr_cha);
 s.FaceColor = 'interp';
 colorbar
+s.EdgeColor = 'none';
 
 P_hel_arr_cha(P_hel_arr_cha==0) = NaN;
+P_hel_arr_cha = P_hel_arr_cha(:,[1:200]);
 figure()
+title('Pressure')
 s = pcolor(P_hel_arr_cha./1000);
 s.FaceColor = 'interp';
 colorbar
+s.EdgeColor = 'none';
+
+qdot_arr_cha(qdot_arr_cha==0) = NaN;
+qdot_arr_cha = qdot_arr_cha(:,[1:200]);
+figure()
+title('Qdot')
+s = pcolor(qdot_arr_cha./1000);
+s.FaceColor = 'interp';
+colorbar
+s.EdgeColor = 'none';
 %% Bottom of Script
 % Resets Matlabs Path preference so it doesn't mess up your matlab
 clear CEApath INPPath funcPath
