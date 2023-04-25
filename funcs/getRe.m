@@ -1,6 +1,6 @@
-function [Re] = getRe(mdot, hydraulic_D, dynamicViscosity)
+function [Re] = getRe(Vel, dynvisc, rho, Dh)
 % Returns the reynolds number
 
-Re = (4 * mdot) / (pi * hydraulic_D * dynamicViscosity);
+Re = (rho*Vel*Dynvisc)
 
 end
