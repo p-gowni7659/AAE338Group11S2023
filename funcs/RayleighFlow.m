@@ -1,4 +1,4 @@
-function [Me,Te] = getMTe(Ti, T0e, Mi, gamma)
+function [Me,Te, Pe] = RayleighFlow(Pi, Ti, T0e, Mi, gamma)
     % Calculates New Mach Number using Stagnation Temperature of the 
     % exit flowing gas
 
@@ -15,14 +15,17 @@ function [Me,Te] = getMTe(Ti, T0e, Mi, gamma)
 
     % Solves for Mach Number and Exit Static Temperature
     MeArray = real(double(solve(M_func, Mo)));
-    index = find(MeArray >= 0 & MeArray <= 1);
-    Me = MeArray(index);
+    Me = MeArray(MeArray >= 0 & MeArray <= 1);
 
     % If critical condition is met, Mach 1 number is taken
     if length(Me) > 1
         Me = Me(1);
     end
 
+    % Calculates Static Presure at Exit
+    Pe = Pi * ((gamma * Mi^2 + 1) / (gamma * Me^2 + 1));
+
+    % Calculates Static Temperature at Exit
     Te = T0e / (1 + ((gamma - 1) / 2) * Me^2);
 
 end
