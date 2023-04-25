@@ -287,7 +287,7 @@ disp('Simulation Complete');
 step_down = chan_ID + 2*chan_t;
 Tmax = 1088; % Temperature at which material properties fall apart
 Mmax = 1; % Max Mach number allowed in code
-steps_down = floor(2*contract_L / step); % Number of steps in the foor loop
+steps_down = floor((contract_L + nozzle_L)/ step); % Number of steps in the foor loop
 
 % Array initialization
 qdot_arr_cha = zeros(1, steps);
