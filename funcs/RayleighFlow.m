@@ -15,9 +15,9 @@ function [Me,Te, Pe] = RayleighFlow(Pi, Ti, T0e, Mi, gamma)
     M_func = T_ratio == (Mnum / Mden) * Mmult;
 
     % Solves for Mach Number and Exit Static Temperature
-    MeArray = real(double(solve(M_func, Mo)));
+    MeArray = abs(double(solve(M_func, Mo)));
     disp(MeArray)
-    Me = MeArray(MeArray >= 0 & MeArray <= 1);
+    Me = MeArray(MeArray > 0 & MeArray <= 1);
 
     % If critical condition is met, Mach 1 number is taken
     if length(Me) > 1
