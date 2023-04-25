@@ -169,25 +169,41 @@ Cv_init = py.CoolProp.CoolProp.PropsSI("O","T",heltemp_init,"P", helpress_init,"
 gma_init = Cp_init/Cv_init;
 Tstag_hel_init = heltemp_init * (1+((gma_init-1)/2)*helmach_init);
 T0stari = heltemp_init * ((1 + gma_init * helmach_init^2)^2 / (2 * (gma_init + 1) * helmach_init^2));
+
 %% LOOP
+
+% For Loop Conditions
 step = 0.01;
-i = 1;
+Tmax = 1088; % Temperature at which material properties fall apart
+Mmax = 1; % Max Mach number allowed in code
+steps = floor(2*chamber_L / step); % Number of steps in the foor loop
 
-qdot_arr = [];
-T_cw_arr = [];
-T_hw_arr = [];
-T_hel_arr = [];
-P_hel_arr = [];
-M_hel_arr = [];
+% Array initialization
+qdot_arr = zeros(1, steps);
+T_cw_arr = zeros(1, steps);
+T_hw_arr = zeros(1, steps);
+T_hel_arr = zeros(1, steps);
+P_hel_arr = zeros(1, steps);
+M_hel_arr = zeros(1, steps);
 
-while i < (2*chamber_L/step)
+% Informs user Loop is Running
+disp('Simulation Running...');
+
+for i = 1:steps
     
     %Setting Helium Step Input Parameters
     if i == 1
+        % Sets initial properties of helium
         Ti = heltemp_init;
         Pi = helpress_init;
         Mi = helmach_init;
         T0i = Tstag_hel_init;
+
+        % Places intial values into array
+%         T_hel_arr(1) = Ti;
+%         P_hel_array(1) = Pi;
+%         M_hel_arr(1) = Mi;
+        
     else
         Ti = Te;
         Pi = Pe;
@@ -195,9 +211,6 @@ while i < (2*chamber_L/step)
         T0i = T0e;
     end
     
-    T_hel_arr = [T_hel_arr Ti];
-    P_hel_arr = [P_hel_arr Pi];
-    M_hel_arr = [M_hel_arr Mi];
     %Initializing Forced Convection
     Cp = py.CoolProp.CoolProp.PropsSI("C","T",Ti,"P", Pi,"Helium");
     Cv = py.CoolProp.CoolProp.PropsSI("O","T",Ti,"P", Pi,"Helium");
@@ -213,35 +226,42 @@ while i < (2*chamber_L/step)
         disp('Forced Convection Failed to Converge')
         break
     end
-
-    %Storing Forced Convection Results
-    qdot_arr = [qdot_arr q_dot];
-    T_cw_arr = [T_cw_arr T_cw];
-    T_hw_arr = [T_hw_arr T_hw];
     
     %Initialiing Ralyeigh Flow
     Qdot = q_dot * step * (Dh+2*wall_thick);
-    disp(Qdot)
     rho_i = py.CoolProp.CoolProp.PropsSI("D","T",Ti,"P", Pi,"Helium");
     mdot = rho_i * Vel_i * (pi*(Dh/2)^2);
-
-    disp(mdot)
     
     % Rayleigh Flow Calculations
     [T0e] = getTempStagNew(Qdot, mdot, Mi, Ti, gma_hel, Cp);
     [Me,Te, Pe] = RayleighFlow(Pi, T0e, Mi, gma_hel, T0stari);
-    i = i+1;
+    
+    % Places helium values into array
+    T_hel_arr(i) = Ti;
+    P_hel_arr(i) = Pi;
+    M_hel_arr(i) = Mi;
+
+    % Storing Forced Convection Results
+    qdot_arr(i) = q_dot;
+    T_cw_arr(i) = T_cw;
+    T_hw_arr(i) = T_hw;
+
 end
+
+% Prints that the simulation is complete
+disp('Simulation Complete');
 
 figure(9)
 plot(M_hel_arr, T_hel_arr)
 xlabel("Mach Number")
 ylabel("Helium Temperature")
+grid on;
 
 figure(10)
 plot(M_hel_arr, T_hw_arr)
 xlabel("Mach Number")
 ylabel("Chamber Side Wall Temperature")
+grid on;
 
 %% Bottom of Script
 % Resets Matlabs Path preference so it doesn't mess up your matlab
