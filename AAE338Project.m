@@ -1,5 +1,15 @@
-%AAE338 Project
+%% Information
 
+% Class: AAE 338
+% Names:
+%   - Matthew Currie
+%   - Spence Troop
+%   - Jonah Fouts
+%   - Alex Porter
+%   - Preetham Gowni
+% Assignment: Final Project
+
+%% Initialization
 close all;
 clear;
 clc;
