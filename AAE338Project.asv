@@ -165,7 +165,7 @@ Tstag_hel_init = 3487;
 %% LOOP
 step = 0.01;
 i = 1;
-
+gma_hel = 1.66;
 qdot_arr = [];
 T_cw_arr = [];
 T_hw_arr = [];
@@ -187,10 +187,6 @@ while i < (chamberlen/step)
     end
 
     %Initializing Forced Convection
-    Cp = py.CoolProp.CoolProp.PropsSI("C","T",Ti,"P", Pi,"Helium");
-    CV = py.CoolProp.CoolProp.PropsSI("O","T",Ti,"P", Pi,"Helium");
-    gma_hel = Cp/Cv;
-
     R_i = py.CoolProp.CoolProp.PropsSI("gas_constant","T",Ti,"P", Pi,"Helium");
     Vel_i = Mi * sqrt(gma_hel * R_i * T_i);
     [q_dot, T_cw, T_hw] = convergeTemp(Chambertemp, h_gas, k, wall_thick, Ti,Vel_i,Dh,Pi);
@@ -208,12 +204,9 @@ while i < (chamberlen/step)
     T_hw_arr = [T_hw_arr T_hw];
     
     %Initialiing Ralyeigh Flow
-    Qdot = qdot * step * (Dh+2*wall_thick);
-    rho_i = py.CoolProp.CoolProp.PropsSI("D","T",Ti,"P", Pi,"Helium");
-    mdot = rho_i * Vel_i * (pi*(Dh/2)^2);
-    
-    [Te0] = getTempStagNew(Qdot, mdot, Mi, Ti, Pi, gma_hel, Cp);
-    
+    Qdot = qdot * step * Dh;
+    mdot
+    [Te0] = getTempStagNew(Qdot, mdot, Mi, Ti, Pi, gma_hel, Cp)
 end
 
 %% Bottom of Script
