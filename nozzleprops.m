@@ -18,5 +18,10 @@ else
     disp("Spence Sucks")
 end
 nozzlerad = sqrt(area/pi);
-tubelen = 2*pi(nozzlerad + wallt + Dt/2);
+tubelen = 2*pi*(nozzlerad + wallt + Dt/2);
+disp(hgas)
+disp(area)
+disp(Tgas)
+disp(tubelen)
 end
+
