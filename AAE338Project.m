@@ -40,7 +40,8 @@ T_cns = combustionTemperature; %K
 R = P0 / (rho0 * T_cns);
 %As an example, used F1 Engine Epxanison Ratio of 16:1. Guessed Chamber
 %Area Ratio of 3:1 since it will change.
-Aratio_sub = linspace(3,1,200);
+contractionRatio = 3;
+Aratio_sub = linspace(contractionRatio,1,200);
 Aratio_sup = linspace(1.01,expansionRatio,3000);
 Aratio = [Aratio_sub,Aratio_sup];
 M_x = [];
@@ -126,30 +127,24 @@ clear RESTOREDEFAULTPATH_EXECUTED
 Lstar = 1.143; %meters, 45 in
 chan_ID = 0;
 chan_t = 0;
-At = (mdot*CStar)/P0; %m^2
-contrac = 3; %Empirical chamber contratiuon Ratio for Liquid-Liquid (3 in throat diameter)
+At = (mdot * CStar) / P0; %m^2
 
-[chamber_L, contract_L, nozzle_L, cham_chan_num] = getChamberSize(At, contrac, expansionRatio, Lstar, chan_ID, chan_t);
+[chamber_L, contract_L, nozzle_L, cham_chan_num] = getChamberSize(At, contractionRatio, expansionRatio, Lstar, chan_ID, chan_t);
 
+Dt = 2 * sqrt(At/pi);
+Dc = sqrt((At * contractionRatio) / pi) * 2;
+De = sqrt((At * expansionRatio) / pi) * 2;
 
-%Lc = 0.254; %Chamber length based on Huazel empirical correlations
-
-diamt = 2*sqrt(At/pi);
-diamt_inches = diamt*39.3701;
-
-Dc = diamt * contrac;
-De = diamt * expansionRatio;
 num_channels = 20; %iterate this variable?
-Chamber_circum = pi*Dc;
+Chamber_circum = pi * Dc;
 
 A = ((At ./ M_x) .* (((2 + (specificHeatRatio - 1) .* M_x .^ 2) ./ (specificHeatRatio + 1)) .^ ((specificHeatRatio + 1) ./ (2 .* (specificHeatRatio - 1)))));
 
 x = linspace(-(chamber_L + contract_L), nozzle_L, 3200);
 
-
 % Plot the cross-section
 figure()
-plot(x, sqrt(A/pi), 'LineWidth', 2);
+plot(x, sqrt(A/pi));
 grid on
 yline(0)
 xlabel('Radial distance (m)');
