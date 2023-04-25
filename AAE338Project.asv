@@ -131,20 +131,25 @@ At = (mdot * CStar) / P0; %m^2
 
 [chamber_L, contract_L, nozzle_L, cham_chan_num] = getChamberSize(At, contractionRatio, expansionRatio, Lstar, chan_ID, chan_t);
 
-Dt = 2 * sqrt(At/pi);
-Dc = sqrt((At * contractionRatio) / pi) * 2;
-De = sqrt((At * expansionRatio) / pi) * 2;
 
+%Lc = 0.254; %Chamber length based on Huazel empirical correlations
+
+diamt = 2*sqrt(At/pi);
+diamt_inches = diamt*39.3701;
+
+Dc = diamt * contrac;
+De = diamt * expansionRatio;
 num_channels = 20; %iterate this variable?
-Chamber_circum = pi * Dc;
+Chamber_circum = pi*Dc;
 
 A = ((At ./ M_x) .* (((2 + (specificHeatRatio - 1) .* M_x .^ 2) ./ (specificHeatRatio + 1)) .^ ((specificHeatRatio + 1) ./ (2 .* (specificHeatRatio - 1)))));
 
 x = linspace(-(chamber_L + contract_L), nozzle_L, 3200);
 
+
 % Plot the cross-section
 figure()
-plot(x, sqrt(A/pi));
+plot(x, sqrt(A/pi), 'LineWidth', 2);
 grid on
 yline(0)
 xlabel('Radial distance (m)');
