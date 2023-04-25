@@ -180,7 +180,7 @@ T_hel_arr = [];
 P_hel_arr = [];
 M_hel_arr = [];
 
-while i < (chamber_L/step)
+while i < (2*chamber_L/step)
     
     %Setting Helium Step Input Parameters
     if i == 1
@@ -224,6 +224,8 @@ while i < (chamber_L/step)
     disp(Qdot)
     rho_i = py.CoolProp.CoolProp.PropsSI("D","T",Ti,"P", Pi,"Helium");
     mdot = rho_i * Vel_i * (pi*(Dh/2)^2);
+
+    disp(mdot)
     
     % Rayleigh Flow Calculations
     [T0e] = getTempStagNew(Qdot, mdot, Mi, Ti, gma_hel, Cp);
@@ -233,9 +235,13 @@ end
 
 figure(9)
 plot(M_hel_arr, T_hel_arr)
+xlabel("Mach Number")
+ylabel("Helium Temperature")
 
 figure(10)
 plot(M_hel_arr, T_hw_arr)
+xlabel("Mach Number")
+ylabel("Chamber Side Wall Temperature")
 
 %% Bottom of Script
 % Resets Matlabs Path preference so it doesn't mess up your matlab
