@@ -8,7 +8,7 @@ clc;
 pressureExit = 1; %psia
 pressureChamber = 400; %psia
 OF = 2.35;
-mdot_engine = 4; %kg/s propellant mass flow rate (iterate this variable?)
+mdot = 4; %kg/s propellant mass flow rate (iterate this variable?)
 contractionRatio = 3;
 Lstar = 1.143; %meters, 45 in
 T_hw = 1088; %K -Inconel X750 Wall Temperature (1500 F)
@@ -92,6 +92,7 @@ title('Nozzle Velocity Distribution')
 xlabel("Area Ratio [A/At]")
 ylabel('Velocity [m/s]')
 
+Thurst
 %%
 Pr = (4 * gma) / (9 * gma - 5);
 r = Pr ^ (0.33);
@@ -129,7 +130,7 @@ chan_ID = 0.01; %m (1 cm)
 saf_fac = 2;
 chan_t = saf_fac*(helpress_init*chan_ID/(2*tensile));
 
-At = (mdot_engine * CStar) / P0; %m^2
+At = (mdot * CStar) / P0; %m^2
 
 [chamber_L, contract_L, nozzle_L, cham_chan_num] = getChamberSize(At, contractionRatio, expansionRatio, Lstar, chan_ID, chan_t);
 
