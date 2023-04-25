@@ -4,11 +4,6 @@ close all;
 clear;
 clc;
 
-
-% Using CoolProp
-py.CoolProp.CoolProp.PropsSI('P', 'T', 298, 'Q', 0, 'water');
-
-
 %% CEA
 CEAPath = append(pwd, '/PSP_CEA_function_wrapper');
 INPPath = append(pwd, '/INP_OUT');
