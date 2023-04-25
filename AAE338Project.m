@@ -155,8 +155,8 @@ axis equal
 Chambertemp = 3000; %K
 
 heltemp_init = 200; %K
-helpress_init = 5000000;%Pa
-helmach_init = 0.01;
+helpress_init = 400000;%Pa
+helmach_init = 0.1;
 h_gas = 100;
 k_wall = 25;
 wall_thick = 0.02;
@@ -172,9 +172,9 @@ i = 1;
 qdot_arr = [];
 T_cw_arr = [];
 T_hw_arr = [];
-T_hel_arr = [heltemp_init];
-P_hel_arr = [helpress_init];
-M_hel_arr = [helmach_init];
+T_hel_arr = [];
+P_hel_arr = [];
+M_hel_arr = [];
 
 while i < (chamber_L/step)
     
