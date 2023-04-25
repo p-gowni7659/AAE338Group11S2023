@@ -2,17 +2,15 @@ function [q_dot, T_cw, T_hw] = convergeTemp(T_gas, h_gas, k, wall_thick, T_i,Vel
 
 T_hw_guess = T_gas - 100;
 
-<<<<<<< HEAD
+
 h_hel = getHc(Vel,Dh,T_i,P_i);
 disp(h_hel)
-=======
-%h_hel = 100;
+
 T_na = 1000;
-h_hel = getHc(mdot,Dh,T_i,P_i,T_na);
+
 
 disp(h_hel)
 
->>>>>>> b769f4915d34bdcd6fb1f55aa56675da50e1f14a
 
 tolerance = 10;
 step = .01;
@@ -30,12 +28,11 @@ while i < trials
 
     q_dot_cc = h_hel*(T_cw - T_i);
 
-<<<<<<< HEAD
+
    % disp(q_dot_hc)
     %disp(q_dot_cc)
 
-=======
->>>>>>> b769f4915d34bdcd6fb1f55aa56675da50e1f14a
+
     if abs(q_dot_hc - q_dot_cc) <= tolerance
 
         q_dot = q_dot_cc;
