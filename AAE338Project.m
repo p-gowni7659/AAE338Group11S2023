@@ -14,8 +14,8 @@ Lstar = 1.143; %meters, 45 in
 T_hw = 1088; %K -Inconel X750 Wall Temperature (1500 F)
 tensile = 5.537*10^8; %Pa - Tensile strength at 1088K (1500 F) 
 k = 23; %W/m-K -Nozzle wall made from Inconel X750 @ 1500F
-converge_num = 200; %points in converging section
-diverge_num = 3000; %points in diverging section
+converge_num = 10000; %points in converging section
+diverge_num = 10000; %points in diverging section
 
 %% CEA
 CEAPath = append(pwd, '/PSP_CEA_function_wrapper');
