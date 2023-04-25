@@ -165,7 +165,7 @@ axis equal
 Chambertemp = T_cns; %K
 heltemp_init = 200; %K
 helpress_init = 1000000;%Pa
-helmach_init = 0.3;
+helmach_init = 0.01;
 h_gas = h_g_x(1);
 k_wall = k;
 wall_thick = 2*chan_t;
@@ -290,14 +290,14 @@ Mmax = 1; % Max Mach number allowed in code
 steps_down = floor(2*contract_L / step); % Number of steps in the foor loop
 
 % Array initialization
-qdot_arr_cha = zeros(1, steps);
-T_cw_arr_cha = zeros(1, steps);
-T_hw_arr_cha = zeros(1, steps);
-T_hel_arr_cha = zeros(1, steps);
-P_hel_arr_cha = zeros(1, steps);
-M_hel_arr_cha = zeros(1, steps);
+qdot_arr_cha = zeros(steps_down, 40);
+T_cw_arr_cha = zeros(steps_down, 40);
+T_hw_arr_cha = zeros(steps_down, 40);
+T_hel_arr_cha = zeros(steps_down, 40);
+P_hel_arr_cha = zeros(steps_down, 40);
+M_hel_arr_cha = zeros(steps_down, 40);
 
-% Informs user Loop is Running
+% Informs user L0oop is Running
 disp('Simulation Running...');
 
 for j = 1:steps_down
@@ -354,19 +354,29 @@ for j = 1:steps_down
         [Me,Te, Pe] = RayleighFlow(Pi, T0e, Mi, gma_hel, T0stari);
     
         % Places helium values into array
-        T_hel_arr_cha(i) = Ti;
-        P_hel_arr_cha(i) = Pi;
-        M_hel_arr_cha(i) = Mi;
+        T_hel_arr_cha(j,i) = Ti;
+        P_hel_arr_cha(j,i) = Pi;
+        M_hel_arr_cha(j,i) = Mi;
     
         % Storing Forced Convection Results
-        qdot_arr_cha(i) = q_dot;
-        T_cw_arr_cha(i) = T_cw;
-        T_hw_arr_cha(i) = T_hw;
+        qdot_arr_cha(j,i) = q_dot;
+        T_cw_arr_cha(j,i) = T_cw;
+        T_hw_arr_cha(j,i) = T_hw;
     
     end
 
 end
+M_hel_arr_cha(M_hel_arr_cha==0) = NaN;
+figure()
+s = pcolor(M_hel_arr_cha);
+s.FaceColor = 'interp';
+colorbar
 
+P_hel_arr_cha(P_hel_arr_cha==0) = NaN;
+figure()
+s = pcolor(P_hel_arr_cha./1000);
+s.FaceColor = 'interp';
+colorbar
 %% Bottom of Script
 % Resets Matlabs Path preference so it doesn't mess up your matlab
 clear CEApath INPPath funcPath
