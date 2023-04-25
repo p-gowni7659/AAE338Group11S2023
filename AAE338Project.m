@@ -153,7 +153,7 @@ axis equal
 %% Helium Initial Conditions/Loop
 %Initial Helium Pressure
 Chambertemp = 3000; %K
-chamberlen = 1; %m
+
 heltemp_init = 200; %K
 helpress_init = 5000000;%Pa
 helmach_init = 0.01;
@@ -172,48 +172,52 @@ T_hw_arr = [];
 T_hel_arr = [heltemp_init];
 P_hel_arr = [helpress_init];
 M_hel_arr = [helmach_init];
-while i < (chamberlen/step)
+
+while i < (chamber_L/step)
 
     %Setting Helium Step Input Parameters
     if i == 1
         Ti = heltemp_init;
         Pi = helpress_init;
         Mi = helmach_init;
-        T0i = 
+        T0i = Tstag_hel_init;
     else
         Ti = Te;
         Pi = Pe;
         Mi = Me;
+        T0i = T0e;
     end
-
+    T_hel_arr = [T_hel_arr Ti];
+    P_hel_arr = [P_hel_arr Pi];
+    M_hel_arr = [M_hel_arr Mi];
     %Initializing Forced Convection
     Cp = py.CoolProp.CoolProp.PropsSI("C","T",Ti,"P", Pi,"Helium");
-    CV = py.CoolProp.CoolProp.PropsSI("O","T",Ti,"P", Pi,"Helium");
+    Cv = py.CoolProp.CoolProp.PropsSI("O","T",Ti,"P", Pi,"Helium");
     gma_hel = Cp/Cv;
 
     R_i = py.CoolProp.CoolProp.PropsSI("gas_constant","T",Ti,"P", Pi,"Helium");
-    Vel_i = Mi * sqrt(gma_hel * R_i * T_i);
+    Vel_i = Mi * sqrt(gma_hel * R_i * Ti);
     [q_dot, T_cw, T_hw] = convergeTemp(Chambertemp, h_gas, k, wall_thick, Ti,Vel_i,Dh,Pi);
 
     %Checking Forced Convection Convergence
-    if qdot == 1
+    if q_dot == 1
        
         disp('Forced Convection Failed to Converge')
         break
     end
 
     %Storing Forced Convection Results
-    qdot_arr = [qdot_arr qdot];
+    qdot_arr = [qdot_arr q_dot];
     T_cw_arr = [T_cw_arr T_cw];
     T_hw_arr = [T_hw_arr T_hw];
     
     %Initialiing Ralyeigh Flow
-    Qdot = qdot * step * (Dh+2*wall_thick);
+    Qdot = q_dot * step * (Dh+2*wall_thick);
     rho_i = py.CoolProp.CoolProp.PropsSI("D","T",Ti,"P", Pi,"Helium");
     mdot = rho_i * Vel_i * (pi*(Dh/2)^2);
     
-    [Te0] = getTempStagNew(Qdot, mdot, Mi, Ti, Pi, gma_hel, Cp);
-    
+    [T0e] = getTempStagNew(Qdot, mdot, Mi, Ti, Pi, gma_hel, Cp);
+    [Me,Te, Pe] = RayleighFlow(Pi, Ti, T0e, Mi, gma_hel);
 end
 
 %% Bottom of Script
