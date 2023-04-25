@@ -6,7 +6,7 @@ T_hw_guess = T_gas - 100;
 h_hel = getHc(Vel,Dh,T_i,P_i);
 
 
-disp(h_hel)
+%disp(h_hel)
 
 
 tolerance = 10;

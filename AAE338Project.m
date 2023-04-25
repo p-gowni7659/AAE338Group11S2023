@@ -161,7 +161,10 @@ h_gas = 100;
 k_wall = 25;
 wall_thick = 0.02;
 Dh = 0.01;
-Tstag_hel_init = 3487;
+Cp_init = py.CoolProp.CoolProp.PropsSI("C","T",heltemp_init,"P", helpress_init,"Helium");
+Cv_init = py.CoolProp.CoolProp.PropsSI("O","T",heltemp_init,"P", helpress_init,"Helium");
+gma_init = Cp_init/Cv_init;
+Tstag_hel_init = heltemp_init * (1+((gma_init-1)/2)*helmach_init);
 %% LOOP
 step = 0.01;
 i = 1;
@@ -174,7 +177,7 @@ P_hel_arr = [helpress_init];
 M_hel_arr = [helmach_init];
 
 while i < (chamber_L/step)
-
+    
     %Setting Helium Step Input Parameters
     if i == 1
         Ti = heltemp_init;
@@ -187,6 +190,7 @@ while i < (chamber_L/step)
         Mi = Me;
         T0i = T0e;
     end
+    
     T_hel_arr = [T_hel_arr Ti];
     P_hel_arr = [P_hel_arr Pi];
     M_hel_arr = [M_hel_arr Mi];
@@ -198,7 +202,7 @@ while i < (chamber_L/step)
     R_i = py.CoolProp.CoolProp.PropsSI("gas_constant","T",Ti,"P", Pi,"Helium");
     Vel_i = Mi * sqrt(gma_hel * R_i * Ti);
     [q_dot, T_cw, T_hw] = convergeTemp(Chambertemp, h_gas, k, wall_thick, Ti,Vel_i,Dh,Pi);
-
+    
     %Checking Forced Convection Convergence
     if q_dot == 1
        
@@ -213,6 +217,7 @@ while i < (chamber_L/step)
     
     %Initialiing Ralyeigh Flow
     Qdot = q_dot * step * (Dh+2*wall_thick);
+    disp(Qdot)
     rho_i = py.CoolProp.CoolProp.PropsSI("D","T",Ti,"P", Pi,"Helium");
     mdot = rho_i * Vel_i * (pi*(Dh/2)^2);
     
