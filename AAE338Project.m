@@ -14,6 +14,8 @@ Lstar = 1.143; %meters, 45 in
 T_hw = 1088; %K -Inconel X750 Wall Temperature (1500 F)
 tensile = 5.537*10^8; %Pa - Tensile strength at 1088K (1500 F) 
 k = 23; %W/m-K -Nozzle wall made from Inconel X750 @ 1500F
+converge_num = 200; %points in converging section
+diverge_num = 3000; %points in diverging section
 
 %% CEA
 CEAPath = append(pwd, '/PSP_CEA_function_wrapper');
@@ -41,8 +43,8 @@ T_cns = combustionTemperature; %K
 
 R = P0 / (rho0 * T_cns);
 
-Aratio_sub = linspace(contractionRatio, 1, 200);
-Aratio_sup = linspace(1.001, expansionRatio, 3000);
+Aratio_sub = linspace(contractionRatio, 1, converge_num);
+Aratio_sup = linspace(1.001, expansionRatio, diverge_num);
 Aratio = [Aratio_sub Aratio_sup];
 M_x = [];
 rho_x = [];
@@ -136,15 +138,31 @@ De = sqrt((At * expansionRatio) / pi) * 2;
 
 A = ((At ./ M_x) .* (((2 + (gma - 1) .* M_x .^ 2) ./ (gma + 1)) .^ ((gma + 1) ./ (2 .* (gma - 1)))));
 
-x1 = linspace(-contract_L, 0, 200);
-x2 = linspace(0, nozzle_L, 3000);
-x = [x1 x2];
+x1 = linspace(-contract_L, 0, converge_num);
+x2 = linspace(0, nozzle_L, diverge_num);
+xplot = [x1 x2];
 x3 = linspace(-chamber_L, -contract_L, 5);
 x4 = sqrt(A(1)/pi) * ones(length(x3));
 
+%Find Area at a distance x from the start of the converging section
+
+distance_from_start_of_converging = 0; %meters
+
+x = distance_from_start_of_converging;
+
+if x <= contract_L
+    area = A(converge_num * x / contract_L);
+elseif x <= contract_L + nozzle_L
+    area = A(diverge_num * x / nozzle_L);
+else
+    disp("Somthing is wrong lol")
+end
+
+
+
 % Plot the cross-section
 figure()
-plot(x, sqrt(A/pi));
+plot(xplot, sqrt(A/pi));
 grid on
 hold on
 plot(x3, x4, 'color', [0, 0.4470, 0.7410])
