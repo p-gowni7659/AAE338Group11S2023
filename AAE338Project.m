@@ -75,33 +75,6 @@ rho_x = rho_x .* rho0;
 T_x = T_x .* T_cns;
 V_x = M_x .* sqrt(gma .* R .* T_x);
 
-plot(Aratio, M_x)
-grid on;
-title('Nozzle Mach Number Distribution')
-xlabel("Area Ratio [A/At]")
-ylabel('Mach Number')
-
-figure()
-plot(Aratio, rho_x)
-grid on;
-title('Nozzle Density Distribution')
-xlabel("Area Ratio [A/At]")
-ylabel('Density [kg/m^3]')
-
-figure()
-plot(Aratio, T_x)
-grid on;
-title('Nozzle Temperature Distribution [Isentropic]')
-xlabel("Area Ratio [A/At]")
-ylabel('Temperature [K]')
-
-figure()
-plot(Aratio, V_x)
-grid on;
-title('Nozzle Velocity Distribution')
-xlabel("Area Ratio [A/At]")
-ylabel('Velocity [m/s]')
-
 %%
 Pr = (4 * gma) / (9 * gma - 5);
 r = Pr ^ (0.33);
@@ -111,26 +84,6 @@ T_gas = T_cns .* (1 + (r .* ((gma - 1) ./ 2) .* M_x)) ./ (1 + (((gma - 1) ./ 2) 
 h_g_x = (rho_x .* V_x) .^ 0.8;
 Qdot_x = h_g_x .* (T_gas - T_hw);
 %This Qdot_x must be matched by the regenerative cooling from gas(rayliegh flow)
-
-figure()
-plot(Aratio, T_gas)
-grid on;
-title('Nozzle Temperature Gas Distribution [Correlation]')
-xlabel("Area Ratio [A/At]")
-ylabel('Gas Temperature [K]')
-
-figure()
-plot(Aratio, h_g_x)
-grid on;
-title('Nozzle Convective Heat Transfer Coeff Distribution')
-xlabel("Area Ratio [A/At]")
-
-figure()
-plot(Aratio, Qdot_x)
-grid on;
-title('Nozzle Qdot Distribution')
-xlabel("Area Ratio [A/At]")
-ylabel('Qdot')
 
 %% Chamber
 % Channel Initial Conditions
@@ -154,21 +107,6 @@ x2 = linspace(0, nozzle_L, diverge_num);
 xplot = [x1 x2];
 x3 = linspace(-chamber_L, -contract_L, 5);
 x4 = sqrt(A(1)/pi) * ones(length(x3));
-
-
-
-
-% Plot the cross-section
-figure()
-plot(xplot, sqrt(A/pi));
-grid on
-hold on
-plot(x3, x4, 'color', [0, 0.4470, 0.7410])
-yline(0)
-xlabel('Radial distance (m)');
-ylabel('y (m)');
-title('Rocket Nozzle and Chamber Cross-Section');
-axis equal
 
 %% Helium Initial Conditions/Loop
 %Initial Helium Pressure
