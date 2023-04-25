@@ -231,6 +231,12 @@ while i < (chamber_L/step)
     i = i+1;
 end
 
+figure(9)
+plot(M_hel_arr, T_hel_arr)
+
+figure(10)
+plot(M_hel_arr, T_hw_arr)
+
 %% Bottom of Script
 % Resets Matlabs Path preference so it doesn't mess up your matlab
 clear CEApath INPPath funcPath
