@@ -169,3 +169,4 @@ cython_debug/
 *.mexw64
 yprime.mexw64
 *.asv
+cea.mat
