@@ -1,9 +1,8 @@
-function [Me,Te, Pe] = RayleighFlow(Pi, Ti, T0e, Mi, gamma)
+function [Me,Te, Pe] = RayleighFlow(Pi, T0e, Mi, gamma, T0star)
     % Calculates New Mach Number using Stagnation Temperature of the 
     % exit flowing gas
 
     % Calculates T0* of the flowing gas and ratio
-    T0star = Ti * ((1 + gamma * Mi^2)^2 / (2 * (gamma + 1) * Mi^2));
     T_ratio = T0e / T0star;
     % T0i = Ti * (1+ ((gamma-1)/2)*Mi^2);
     %disp(T0star)

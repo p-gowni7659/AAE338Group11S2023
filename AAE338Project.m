@@ -167,6 +167,7 @@ Cp_init = py.CoolProp.CoolProp.PropsSI("C","T",heltemp_init,"P", helpress_init,"
 Cv_init = py.CoolProp.CoolProp.PropsSI("O","T",heltemp_init,"P", helpress_init,"Helium");
 gma_init = Cp_init/Cv_init;
 Tstag_hel_init = heltemp_init * (1+((gma_init-1)/2)*helmach_init);
+T0stari = heltemp_init * ((1 + gma_init * helmach_init^2)^2 / (2 * (gma_init + 1) * helmach_init^2));
 %% LOOP
 step = 0.01;
 i = 1;
@@ -223,8 +224,9 @@ while i < (chamber_L/step)
     rho_i = py.CoolProp.CoolProp.PropsSI("D","T",Ti,"P", Pi,"Helium");
     mdot = rho_i * Vel_i * (pi*(Dh/2)^2);
     
-    [T0e] = getTempStagNew(Qdot, mdot, Mi, Ti, Pi, gma_hel, Cp);
-    [Me,Te, Pe] = RayleighFlow(Pi, Ti, T0e, Mi, gma_hel);
+    % Rayleigh Flow Calculations
+    [T0e] = getTempStagNew(Qdot, mdot, Mi, Ti, gma_hel, Cp);
+    [Me,Te, Pe] = RayleighFlow(Pi, T0e, Mi, gma_hel, T0stari);
     i = i+1;
 end
 
