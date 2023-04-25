@@ -1,4 +1,4 @@
-function [] = coolinggrapher(M_hel_arr, qdot_arr, T_hw_arr, T_cw_arr, T_hel_arr, P_hel_arr, Aratio, x, radius)
+function [] = coolinggrapher(M_hel_arr, qdot_arr, T_hw_arr, T_cw_arr, T_hel_arr, P_hel_arr, Aratio, x, A)
 
 figure()
 plot(M_hel_arr, T_hel_arr)
@@ -35,7 +35,7 @@ ylabel("Helium Static Pressure")
 
 % Plot the cross-section
 figure()
-plot(xplot, sqrt(A/pi));
+plot(x, sqrt(A/pi));
 grid on
 hold on
 plot(x3, x4, 'color', [0, 0.4470, 0.7410])
