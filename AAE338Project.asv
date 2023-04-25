@@ -192,19 +192,12 @@ while i < (chamberlen/step)
     R_i = py.CoolProp.CoolProp.PropsSI("gas_constant","T",Ti,"P", Pi,"Helium");
     Vel_i = Mi * sqrt(gma_hel * R_i * T_i);
     [q_dot, T_cw, T_hw] = convergeTemp(Chambertemp, h_gas, k, wall_thick, Ti,Vel_i,Dh,Pi);
-
-    %Checking Forced Convection Convergence
-    if qdot == 1
-       
-        disp('Forced Convection Failed to Converge')
-        break
-    end
-
+    if qdo 
     %Storing Forced Convection Results
     qdot_arr = [qdot_arr qdot];
     T_cw_arr = [T_cw_arr T_cw];
     T_hw_arr = [T_hw_arr T_hw];
 
     %Initialiing Ralyeigh Flow
-   
+
 end
