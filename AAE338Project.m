@@ -285,14 +285,14 @@ disp('Simulation Complete');
 
 % For Loop Conditions
 step_down = chan_ID + 2*chan_t;
-step_around = 0.01;
+step_around = 0.002;
 Tmax = 1088; % Temperature at which material properties fall apart
 Mmax = 1; % Max Mach number allowed in code
 steps_down = floor((contract_L + nozzle_L)/ step); % Number of steps in the foor loop
 
 max_rad = sqrt(A(end)/pi);
 max_tubelen = 2*pi*(max_rad + chan_t + chan_ID/2);
-max_steps_around = max_tubelen/steps_around;
+max_steps_around = floor(max_tubelen/step_around);
 
 % Array initialization
 qdot_arr_cha = zeros(steps_down, max_steps_around);
@@ -311,7 +311,7 @@ for j = 1:steps_down
     [hgas,area,Tgas,tubelen] = nozzleprops(chan_ID, A, h_g_x,...
         chan_t, j,T_gas,converge_num,contract_L,diverge_num, nozzle_L);
 
-    step_around = 0.002;
+    
     steps_around = floor(tubelen/step_around);
 
     h_gas = hgas;
