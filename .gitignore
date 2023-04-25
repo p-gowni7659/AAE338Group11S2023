@@ -156,9 +156,6 @@ dmypy.json
 # Cython debug symbols
 cython_debug/
 
-# Ignore Compiler (I'm just lazy to find a full solution)
-.mexw64
-
 # PyCharm
 #  JetBrains specific template is maintained in a separate JetBrains.gitignore that can
 #  be found at https://github.com/github/gitignore/blob/main/Global/JetBrains.gitignore
@@ -167,6 +164,8 @@ cython_debug/
 #.idea/
 ~$Bang-Bang Duty Cycle Calcs.xlsx
 
+# Matlab Ignore files (Matt added this)
 .DS_Store
 *.mexw64
 yprime.mexw64
+*.asv
