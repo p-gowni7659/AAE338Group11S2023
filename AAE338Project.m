@@ -5,10 +5,10 @@ clear;
 clc;
 
 %% Initialization
-pressureExit = 2; %psia
-pressureChamber = 300; %psia
+pressureExit = 1; %psia
+pressureChamber = 400; %psia
 OF = 2.35;
-mdot = 5; %kg/s propellant mass flow rate (iterate this variable?)
+mdot = 4; %kg/s propellant mass flow rate (iterate this variable?)
 contractionRatio = 3;
 Lstar = 1.143; %meters, 45 in
 T_hw = 1473.15; %K -Inconcel X750 Wall Temperature
