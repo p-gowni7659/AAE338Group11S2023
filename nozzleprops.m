@@ -20,7 +20,7 @@ elseif x <= contract_L + nozzle_L && run == 1
     area = Area_arr(floor(diverge_num * x / nozzle_L)+converge_num);
     Tgas = T_gas_arr(floor(diverge_num * x / nozzle_L)+converge_num);
     hgas = h_g_x(floor(diverge_num * x / nozzle_L)+converge_num);
-else
+elseif run == 1
     disp("Spence Sucks")
 end
 nozzlerad = sqrt(area/pi);

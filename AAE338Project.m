@@ -15,7 +15,7 @@ clear;
 clc;
 
 %% Rocket Engine Initialization
-pressureExit = 1; %psia
+pressureExit = 3; %psia
 pressureChamber = 400; %psia
 OF = 2.35;
 mdot_engine = 4; %kg/s propellant mass flow rate (iterate this variable?)
@@ -233,7 +233,7 @@ disp('Simulation Complete');
 
 % For Loop Conditions
 step_down = chan_ID + 2*chan_t;
-step_around = 0.002;
+step_around = 0.02;
 Tmax = 1088; % Temperature at which material properties fall apart
 Mmax = 1; % Max Mach number allowed in code
 steps_down = floor((contract_L + nozzle_L)/ step); % Number of steps in the foor loop
