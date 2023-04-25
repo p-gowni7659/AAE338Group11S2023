@@ -4,14 +4,15 @@ close all;
 clear;
 clc;
 
-%% Initialization
+%% Rocket Engine Initialization
 pressureExit = 1; %psia
 pressureChamber = 400; %psia
 OF = 2.35;
 mdot = 4; %kg/s propellant mass flow rate (iterate this variable?)
 contractionRatio = 3;
 Lstar = 1.143; %meters, 45 in
-T_hw = 1473.15; %K -Inconcel X750 Wall Temperature
+T_hw = 1088; %K -Inconel X750 Wall Temperature (1500 F)
+tensile = 5.537*10^8; %Pa - Tensile strength at 1088K (1500 F) 
 k = 25; %W/m-K -Nozzle wall made from Inconel X750
 
 %% CEA
@@ -35,7 +36,7 @@ delete(append(pwd, '\PSP_CEA_function_wrapper\', inputName));
 Isp = Isp / 9.81; %seconds
 
 gma = specificHeatRatio;
-P0 = pressureChamber * 6894.76;
+P0 = pressureChamber * 6894.76; %Pa
 T_cns = combustionTemperature; %K
 
 R = P0 / (rho0 * T_cns);
@@ -119,9 +120,11 @@ xlabel("Area Ratio [A/At]")
 ylabel('Qdot')
 
 %% Chamber
+% Channel Initial Conditions
+chan_ID = 0.01; %m (1 cm)
+saf_fac = 2;
+chan_t = saf_fac*(helpress_init*chan_ID/(2*tensile));
 
-chan_ID = 0;
-chan_t = 0;
 At = (mdot * CStar) / P0; %m^2
 
 [chamber_L, contract_L, nozzle_L, cham_chan_num] = getChamberSize(At, contractionRatio, expansionRatio, Lstar, chan_ID, chan_t);
@@ -152,10 +155,9 @@ axis equal
 
 %% Helium Initial Conditions/Loop
 %Initial Helium Pressure
-Chambertemp = 3000; %K
-
+Chambertemp = T_cns; %K
 heltemp_init = 200; %K
-helpress_init = 400000;%Pa
+helpress_init = 1000000;%Pa
 helmach_init = 0.3;
 h_gas = 100;
 k_wall = 25;

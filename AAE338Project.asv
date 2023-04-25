@@ -4,14 +4,15 @@ close all;
 clear;
 clc;
 
-%% Initialization
-pressureExit = 2; %psia
-pressureChamber = 300; %psia
+%% Rocket Engine Initialization
+pressureExit = 1; %psia
+pressureChamber = 400; %psia
 OF = 2.35;
-mdot = 5; %kg/s propellant mass flow rate (iterate this variable?)
+mdot = 4; %kg/s propellant mass flow rate (iterate this variable?)
 contractionRatio = 3;
 Lstar = 1.143; %meters, 45 in
-T_hw = 1473.15; %K -Inconcel X750 Wall Temperature
+T_hw = 1088; %K -Inconel X750 Wall Temperature (1500 F)
+tensile = 5.537*10^8; %Pa - Tensile strength at 1088K (1500 F) 
 k = 25; %W/m-K -Nozzle wall made from Inconel X750
 
 %% CEA
@@ -35,7 +36,7 @@ delete(append(pwd, '\PSP_CEA_function_wrapper\', inputName));
 Isp = Isp / 9.81; %seconds
 
 gma = specificHeatRatio;
-P0 = pressureChamber * 6894.76;
+P0 = pressureChamber * 6894.76; %Pa
 T_cns = combustionTemperature; %K
 
 R = P0 / (rho0 * T_cns);
@@ -119,9 +120,11 @@ xlabel("Area Ratio [A/At]")
 ylabel('Qdot')
 
 %% Chamber
+% Channel Initial Conditions
+chan_ID = 0.01; %m (1 cm)
+saf_fac = 2;
+chan_t = saf_fac*(helpress_init*chan_ID/(2*tensile));
 
-chan_ID = 0;
-chan_t = 0;
 At = (mdot * CStar) / P0; %m^2
 
 [chamber_L, contract_L, nozzle_L, cham_chan_num] = getChamberSize(At, contractionRatio, expansionRatio, Lstar, chan_ID, chan_t);
@@ -152,16 +155,18 @@ axis equal
 
 %% Helium Initial Conditions/Loop
 %Initial Helium Pressure
-Chambertemp = 3000; %K
-
+Chambertemp = T_cns; %K
 heltemp_init = 200; %K
-helpress_init = 5000000;%Pa
-helmach_init = 0.01;
+helpress_init = 1000000;%Pa
+helmach_init = 0.3;
 h_gas = 100;
 k_wall = 25;
 wall_thick = 0.02;
 Dh = 0.01;
-Tstag_hel_init = 3487;
+Cp_init = py.CoolProp.CoolProp.PropsSI("C","T",heltemp_init,"P", helpress_init,"Helium");
+Cv_init = py.CoolProp.CoolProp.PropsSI("O","T",heltemp_init,"P", helpress_init,"Helium");
+gma_init = Cp_init/Cv_init;
+Tstag_hel_init = heltemp_init * (1+((gma_init-1)/2)*helmach_init);
 %% LOOP
 step = 0.01;
 i = 1;
@@ -169,52 +174,58 @@ i = 1;
 qdot_arr = [];
 T_cw_arr = [];
 T_hw_arr = [];
-T_hel_arr = [heltemp_init];
-P_hel_arr = [helpress_init];
-M_hel_arr = [helmach_init];
+T_hel_arr = [];
+P_hel_arr = [];
+M_hel_arr = [];
 
 while i < (chamber_L/step)
-
+    
     %Setting Helium Step Input Parameters
     if i == 1
         Ti = heltemp_init;
         Pi = helpress_init;
         Mi = helmach_init;
-        T0i = 
+        T0i = Tstag_hel_init;
     else
         Ti = Te;
         Pi = Pe;
         Mi = Me;
+        T0i = T0e;
     end
-
+    
+    T_hel_arr = [T_hel_arr Ti];
+    P_hel_arr = [P_hel_arr Pi];
+    M_hel_arr = [M_hel_arr Mi];
     %Initializing Forced Convection
     Cp = py.CoolProp.CoolProp.PropsSI("C","T",Ti,"P", Pi,"Helium");
-    CV = py.CoolProp.CoolProp.PropsSI("O","T",Ti,"P", Pi,"Helium");
+    Cv = py.CoolProp.CoolProp.PropsSI("O","T",Ti,"P", Pi,"Helium");
     gma_hel = Cp/Cv;
 
     R_i = py.CoolProp.CoolProp.PropsSI("gas_constant","T",Ti,"P", Pi,"Helium");
-    Vel_i = Mi * sqrt(gma_hel * R_i * T_i);
+    Vel_i = Mi * sqrt(gma_hel * R_i * Ti);
     [q_dot, T_cw, T_hw] = convergeTemp(Chambertemp, h_gas, k, wall_thick, Ti,Vel_i,Dh,Pi);
-
+    
     %Checking Forced Convection Convergence
-    if qdot == 1
+    if q_dot == 1
        
         disp('Forced Convection Failed to Converge')
         break
     end
 
     %Storing Forced Convection Results
-    qdot_arr = [qdot_arr qdot];
+    qdot_arr = [qdot_arr q_dot];
     T_cw_arr = [T_cw_arr T_cw];
     T_hw_arr = [T_hw_arr T_hw];
     
     %Initialiing Ralyeigh Flow
-    Qdot = qdot * step * (Dh+2*wall_thick);
+    Qdot = q_dot * step * (Dh+2*wall_thick);
+    disp(Qdot)
     rho_i = py.CoolProp.CoolProp.PropsSI("D","T",Ti,"P", Pi,"Helium");
     mdot = rho_i * Vel_i * (pi*(Dh/2)^2);
     
-    [Te0] = getTempStagNew(Qdot, mdot, Mi, Ti, Pi, gma_hel, Cp);
-    
+    [T0e] = getTempStagNew(Qdot, mdot, Mi, Ti, Pi, gma_hel, Cp);
+    [Me,Te, Pe] = RayleighFlow(Pi, Ti, T0e, Mi, gma_hel);
+    i = i+1;
 end
 
 %% Bottom of Script
