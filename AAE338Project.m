@@ -285,17 +285,23 @@ disp('Simulation Complete');
 
 % For Loop Conditions
 step_down = chan_ID + 2*chan_t;
+step_around = 0.01;
 Tmax = 1088; % Temperature at which material properties fall apart
 Mmax = 1; % Max Mach number allowed in code
-steps_down = floor(2*contract_L / step); % Number of steps in the foor loop
+steps_down = floor((contract_L + nozzle_L)/ step); % Number of steps in the foor loop
+
+max_rad = sqrt(A(end)/pi);
+max_tubelen = 2*pi*(max_rad + chan_t + chan_ID/2);
+max_steps_around = max_tubelen/steps_around;
 
 % Array initialization
-qdot_arr_cha = zeros(steps_down, 1000);
-T_cw_arr_cha = zeros(steps_down, 1000);
-T_hw_arr_cha = zeros(steps_down, 1000);
-T_hel_arr_cha = zeros(steps_down, 1000);
-P_hel_arr_cha = zeros(steps_down, 1000);
-M_hel_arr_cha = zeros(steps_down, 1000);
+qdot_arr_cha = zeros(steps_down, max_steps_around);
+T_cw_arr_cha = zeros(steps_down, max_steps_around);
+T_hw_arr_cha = zeros(steps_down, max_steps_around);
+T_hel_arr_cha = zeros(steps_down, max_steps_around);
+P_hel_arr_cha = zeros(steps_down, max_steps_around);
+M_hel_arr_cha = zeros(steps_down, max_steps_around);
+
 
 % Informs user L0oop is Running
 disp('Simulation Running...');
