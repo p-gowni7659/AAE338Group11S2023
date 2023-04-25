@@ -218,6 +218,7 @@ while i < (chamber_L/step)
     
     [T0e] = getTempStagNew(Qdot, mdot, Mi, Ti, Pi, gma_hel, Cp);
     [Me,Te, Pe] = RayleighFlow(Pi, Ti, T0e, Mi, gma_hel);
+    i = i+1;
 end
 
 %% Bottom of Script
