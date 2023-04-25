@@ -13,7 +13,7 @@ contractionRatio = 3;
 Lstar = 1.143; %meters, 45 in
 T_hw = 1088; %K -Inconel X750 Wall Temperature (1500 F)
 tensile = 5.537*10^8; %Pa - Tensile strength at 1088K (1500 F) 
-k = 25; %W/m-K -Nozzle wall made from Inconel X750
+k = 23; %W/m-K -Nozzle wall made from Inconel X750 @ 1500F
 
 %% CEA
 CEAPath = append(pwd, '/PSP_CEA_function_wrapper');
@@ -121,6 +121,7 @@ ylabel('Qdot')
 
 %% Chamber
 % Channel Initial Conditions
+helpress_init = 1000000; %Pa
 chan_ID = 0.01; %m (1 cm)
 saf_fac = 2;
 chan_t = saf_fac*(helpress_init*chan_ID/(2*tensile));
@@ -159,10 +160,10 @@ Chambertemp = T_cns; %K
 heltemp_init = 200; %K
 helpress_init = 1000000;%Pa
 helmach_init = 0.3;
-h_gas = 100;
-k_wall = 25;
-wall_thick = 0.02;
-Dh = 0.01;
+h_gas = h_g_x(1);
+k_wall = k;
+wall_thick = 2*chan_t;
+Dh = chan_ID;
 Cp_init = py.CoolProp.CoolProp.PropsSI("C","T",heltemp_init,"P", helpress_init,"Helium");
 Cv_init = py.CoolProp.CoolProp.PropsSI("O","T",heltemp_init,"P", helpress_init,"Helium");
 gma_init = Cp_init/Cv_init;

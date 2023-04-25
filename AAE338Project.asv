@@ -13,7 +13,7 @@ contractionRatio = 3;
 Lstar = 1.143; %meters, 45 in
 T_hw = 1088; %K -Inconel X750 Wall Temperature (1500 F)
 tensile = 5.537*10^8; %Pa - Tensile strength at 1088K (1500 F) 
-k = 25; %W/m-K -Nozzle wall made from Inconel X750
+k = 23; %W/m-K -Nozzle wall made from Inconel X750 @ 1500F
 
 %% CEA
 CEAPath = append(pwd, '/PSP_CEA_function_wrapper');
@@ -159,14 +159,15 @@ Chambertemp = T_cns; %K
 heltemp_init = 200; %K
 helpress_init = 1000000;%Pa
 helmach_init = 0.3;
-h_gas = 100;
-k_wall = 25;
-wall_thick = 0.02;
-Dh = 0.01;
+h_gas = h_g_x(1);
+k_wall = k;
+wall_thick = 2*chan_t;
+Dh = chan_ID;
 Cp_init = py.CoolProp.CoolProp.PropsSI("C","T",heltemp_init,"P", helpress_init,"Helium");
 Cv_init = py.CoolProp.CoolProp.PropsSI("O","T",heltemp_init,"P", helpress_init,"Helium");
 gma_init = Cp_init/Cv_init;
 Tstag_hel_init = heltemp_init * (1+((gma_init-1)/2)*helmach_init);
+T0stari = heltemp_init * ((1 + gma_init * helmach_init^2)^2 / (2 * (gma_init + 1) * helmach_init^2));
 %% LOOP
 step = 0.01;
 i = 1;
@@ -223,8 +224,9 @@ while i < (chamber_L/step)
     rho_i = py.CoolProp.CoolProp.PropsSI("D","T",Ti,"P", Pi,"Helium");
     mdot = rho_i * Vel_i * (pi*(Dh/2)^2);
     
-    [T0e] = getTempStagNew(Qdot, mdot, Mi, Ti, Pi, gma_hel, Cp);
-    [Me,Te, Pe] = RayleighFlow(Pi, Ti, T0e, Mi, gma_hel);
+    % Rayleigh Flow Calculations
+    [T0e] = getTempStagNew(Qdot, mdot, Mi, Ti, gma_hel, Cp);
+    [Me,Te, Pe] = RayleighFlow(Pi, T0e, Mi, gma_hel, T0stari);
     i = i+1;
 end
 
