@@ -17,8 +17,8 @@ addpath(CEAPath);
 addpath(INPPath);
 addpath(funcPath);
 
-pressureExit = 5; %psia
-pressureChamber = 150; %psia
+pressureExit = 2; %psia
+pressureChamber = 300; %psia
 OF = 2.35;
 mdot = 5; %kg/s propellant mass flow rate (iterate this variable?)
 nameString = strcat('338_estimates_pip_', num2str(int8(pressureChamber / pressureExit)), '_p_c_', num2str(pressureChamber), '_O_F_', num2str(OF));
@@ -41,8 +41,8 @@ R = P0 / (rho0 * T_cns);
 
 contractionRatio = 3;
 Aratio_sub = linspace(contractionRatio,1,200);
-Aratio_sup = linspace(1.01,expansionRatio,3000);
-Aratio = [Aratio_sub,Aratio_sup];
+Aratio_sup = linspace(1.001,expansionRatio,3000);
+Aratio = [Aratio_sub, Aratio_sup];
 M_x = [];
 rho_x = [];
 T_x = [];
@@ -133,9 +133,6 @@ At = (mdot * CStar) / P0; %m^2
 Dt = 2 * sqrt(At/pi);
 Dc = sqrt((At * contractionRatio) / pi) * 2;
 De = sqrt((At * expansionRatio) / pi) * 2;
-
-num_channels = 20; %iterate this variable?
-Chamber_circum = pi * Dc;
 
 A = ((At ./ M_x) .* (((2 + (gma - 1) .* M_x .^ 2) ./ (gma + 1)) .^ ((gma + 1) ./ (2 .* (gma - 1)))));
 
