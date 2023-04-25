@@ -176,7 +176,7 @@ gma_init = Cp_init/Cv_init;
 Tstag_hel_init = heltemp_init * (1+((gma_init-1)/2)*helmach_init);
 T0stari = heltemp_init * ((1 + gma_init * helmach_init^2)^2 / (2 * (gma_init + 1) * helmach_init^2));
 
-%% LOOP 1
+%% Chamber Cooling Loop
 
 % For Loop Conditions
 step = 0.01;
@@ -281,7 +281,7 @@ end
 % Prints that the simulation is complete
 disp('Simulation Complete');
 
-%% LOOP 2
+%% Nozzle Cooling Loop
 
 % For Loop Conditions
 step_down = chan_ID + 2*chan_t;
