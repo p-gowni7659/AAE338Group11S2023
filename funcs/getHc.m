@@ -4,7 +4,7 @@ rho = py.CoolProp.CoolProp.PropsSI('D','T',Ti,'P',Pi,'Helium');
 Pr = py.CoolProp.CoolProp.PropsSI('Prandtl','T',Ti,'P',Pi,'Helium');
 k_bulkT = py.CoolProp.CoolProp.PropsSI('L','T',Ti,'P',Pi,'Helium');
 Re = (rho*vel*Dh)/dy_vsic_bulkT;
-disp(Re)
+
 Nu = 0.027*(Re^0.8)*(Pr^(0.4));
 Hc = (k_bulkT/Dh)*Nu;
 end
