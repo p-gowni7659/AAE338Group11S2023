@@ -5,7 +5,8 @@ function [Me,Te, Pe] = RayleighFlow(Pi, Ti, T0e, Mi, gamma)
     % Calculates T0* of the flowing gas and ratio
     T0star = Ti * ((1 + gamma * Mi^2)^2 / (2 * (gamma + 1) * Mi^2));
     T_ratio = T0e / T0star;
-
+    % T0i = Ti * (1+ ((gamma-1)/2)*Mi^2);
+    %disp(T0star)
     % Creates Equation to solve for
     syms Mo
     Mnum = 2 * (gamma + 1) * Mo^2;
@@ -15,6 +16,7 @@ function [Me,Te, Pe] = RayleighFlow(Pi, Ti, T0e, Mi, gamma)
 
     % Solves for Mach Number and Exit Static Temperature
     MeArray = real(double(solve(M_func, Mo)));
+    disp(MeArray)
     Me = MeArray(MeArray >= 0 & MeArray <= 1);
 
     % If critical condition is met, Mach 1 number is taken

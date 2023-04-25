@@ -156,7 +156,7 @@ Chambertemp = 3000; %K
 
 heltemp_init = 200; %K
 helpress_init = 400000;%Pa
-helmach_init = 0.1;
+helmach_init = 0.3;
 h_gas = 100;
 k_wall = 25;
 wall_thick = 0.02;
