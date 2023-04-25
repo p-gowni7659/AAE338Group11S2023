@@ -321,7 +321,6 @@ for j = 1:steps_down
 
 end
 M_hel_arr_cha(M_hel_arr_cha==0) = NaN;
-M_hel_arr_cha = M_hel_arr_cha(:,[1:200]);
 figure()
 title('Helium Mach')
 s = pcolor(M_hel_arr_cha);
@@ -330,7 +329,6 @@ colorbar
 s.EdgeColor = 'none';
 
 P_hel_arr_cha(P_hel_arr_cha==0) = NaN;
-P_hel_arr_cha = P_hel_arr_cha(:,[1:200]);
 figure()
 title('Pressure')
 s = pcolor(P_hel_arr_cha./1000);
@@ -339,7 +337,6 @@ colorbar
 s.EdgeColor = 'none';
 
 qdot_arr_cha(qdot_arr_cha==0) = NaN;
-qdot_arr_cha = qdot_arr_cha(:,[1:200]);
 figure()
 title('Qdot')
 s = pcolor(qdot_arr_cha./1000);
