@@ -38,8 +38,7 @@ P0 = pressureChamber * 6894.76;
 T_cns = combustionTemperature; %K
 
 R = P0 / (rho0 * T_cns);
-%As an example, used F1 Engine Epxanison Ratio of 16:1. Guessed Chamber
-%Area Ratio of 3:1 since it will change.
+
 contractionRatio = 3;
 Aratio_sub = linspace(contractionRatio,1,200);
 Aratio_sup = linspace(1.01,expansionRatio,3000);
@@ -138,9 +137,11 @@ De = sqrt((At * expansionRatio) / pi) * 2;
 num_channels = 20; %iterate this variable?
 Chamber_circum = pi * Dc;
 
-A = ((At ./ M_x) .* (((2 + (specificHeatRatio - 1) .* M_x .^ 2) ./ (specificHeatRatio + 1)) .^ ((specificHeatRatio + 1) ./ (2 .* (specificHeatRatio - 1)))));
+A = ((At ./ M_x) .* (((2 + (gma - 1) .* M_x .^ 2) ./ (gma + 1)) .^ ((gma + 1) ./ (2 .* (gma - 1)))));
 
-x = linspace(-(chamber_L + contract_L), nozzle_L, 3200);
+x1 = linspace(-(chamber_L + contract_L), 0, 200);
+x2 = linspace(0, nozzle_L, 3000);
+x = [x1 x2];
 
 % Plot the cross-section
 figure()
