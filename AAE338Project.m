@@ -15,7 +15,7 @@ clear;
 clc;
 
 %% Rocket Engine Initialization
-pressureExit = 3; %psia
+pressureExit = 1; %psia
 pressureChamber = 400; %psia
 OF = 2.35;
 mdot_engine = 4; %kg/s propellant mass flow rate (iterate this variable?)
