@@ -1,7 +1,7 @@
 function [q_dot, T_cw, T_hw] = convergeTemp(T_gas, h_gas, k, wall_thick, T_i,mdot,Dh,P_i)
 
 T_hw_guess = T_gas - 100;
-
+T_cw = 100;
 h_hel = 100;
 
 
