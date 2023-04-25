@@ -156,7 +156,19 @@ axis equal
 
 %% Helium Initial Conditions/Loop
 %Initial Helium Pressure
-P0h = 5000000; %pa
-Chambertemp = 3000;
-%%
-
+Chambertemp = 3000; %K
+chamberlen = 1; %m
+heltemp_init = 200; %K
+helpress_init = 5000000;%Pa
+helmach_init = 0.01;
+%% LOOP
+step = 0.01;
+i = 1;
+while i < (chamberlen/step)
+    if i == 1
+        Ti = heltemp_init;
+        Pi = helpress_init;
+        Mi = helmach_init;
+    end
+    
+end
