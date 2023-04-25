@@ -134,9 +134,6 @@ Dt = 2 * sqrt(At/pi);
 Dc = sqrt((At * contractionRatio) / pi) * 2;
 De = sqrt((At * expansionRatio) / pi) * 2;
 
-num_channels = 20; %iterate this variable?
-Chamber_circum = pi * Dc;
-
 A = ((At ./ M_x) .* (((2 + (gma - 1) .* M_x .^ 2) ./ (gma + 1)) .^ ((gma + 1) ./ (2 .* (gma - 1)))));
 
 x1 = linspace(-(chamber_L + contract_L), 0, 200);
