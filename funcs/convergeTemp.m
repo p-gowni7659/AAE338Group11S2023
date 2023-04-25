@@ -4,9 +4,9 @@ T_hw_guess = T_gas - 100;
 
 
 tolerance = 10;
-step = 0.01;
+step = 1;
 
-trials = 1000000;
+trials = 100000;
 i = 1;
 
 T_hw = T_hw_guess;
