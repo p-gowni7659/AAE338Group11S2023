@@ -1,7 +1,7 @@
 
 
 
-%% LOOP
+%% LOOP 2
 
 % For Loop Conditions
 step_down = chan_ID + 2*chan_t;
@@ -24,7 +24,7 @@ for j = 1:steps_down
 
     step_around = 0.01;
     steps_around = floor();
-    
+
     h_gas = h_g_x();
     Chambertemp = t_gas();
 
