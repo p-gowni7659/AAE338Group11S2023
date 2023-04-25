@@ -136,14 +136,18 @@ De = sqrt((At * expansionRatio) / pi) * 2;
 
 A = ((At ./ M_x) .* (((2 + (gma - 1) .* M_x .^ 2) ./ (gma + 1)) .^ ((gma + 1) ./ (2 .* (gma - 1)))));
 
-x1 = linspace(-(chamber_L + contract_L), 0, 200);
+x1 = linspace(-contract_L, 0, 200);
 x2 = linspace(0, nozzle_L, 3000);
 x = [x1 x2];
+x3 = linspace(-chamber_L, -contract_L, 5);
+x4 = sqrt(A(1)/pi) * ones(length(x3));
 
 % Plot the cross-section
 figure()
 plot(x, sqrt(A/pi));
 grid on
+hold on
+plot(x3, x4, 'color', [0, 0.4470, 0.7410])
 yline(0)
 xlabel('Radial distance (m)');
 ylabel('y (m)');
