@@ -145,19 +145,6 @@ xplot = [x1 x2];
 x3 = linspace(-chamber_L, -contract_L, 5);
 x4 = sqrt(A(1)/pi) * ones(length(x3));
 
-%Find Area at a distance x from the start of the converging section
-
-distance_from_start_of_converging = 0; %meters
-
-x = distance_from_start_of_converging;
-
-if x <= contract_L
-    area = A(converge_num * x / contract_L);
-elseif x <= contract_L + nozzle_L
-    area = A(diverge_num * x / nozzle_L);
-else
-    disp("Somthing is wrong lol")
-end
 
 
 
