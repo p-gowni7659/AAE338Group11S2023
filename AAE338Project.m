@@ -21,7 +21,7 @@ chamberGraphs = 1;
 %% Value Initialization
 % Rocket Engine Initial Conditions
 pressureExit = 1; %psia
-pressureChamber = 400; %psia
+pressureChamber = 100; %psia
 OF = 2.35;
 mdot_engine = .5; %kg/s propellant mass flow rate (iterate this variable?)
 contractionRatio = 3;
@@ -105,10 +105,12 @@ At = (mdot_engine * CStar) / P0; %m^2
 
 Dt = 2 * sqrt(At/pi);
 Dc = sqrt((At * contractionRatio) / pi) * 2;
+Ac = pi* (Dc/2)^2;
 De = sqrt((At * expansionRatio) / pi) * 2;
 Ac = pi* (Dc/2)^2;
 
 A = ((At ./ M_x) .* (((2 + (gma - 1) .* M_x .^ 2) ./ (gma + 1)) .^ ((gma + 1) ./ (2 .* (gma - 1)))));
+
 
 x1 = linspace(-contract_L, 0, converge_num);
 x2 = linspace(0, nozzle_L, diverge_num);
