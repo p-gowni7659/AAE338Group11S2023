@@ -97,13 +97,16 @@ xlabel("Area Ratio [A/At]")
 ylabel('Velocity [m/s]')
 
 figure()
-find_zero = find(T_hw_arr_cha(1,1:end) == 0);
+find_zero = find(T_hw_arr_cha(1,:) == 0);
 plot(linspace(0,1,length(T_hw_arr_cha(1,1:(find_zero(1) - 1)))), T_hw_arr_cha(1,1:(find_zero(1) - 1)))
 grid on
 hold on
 i = 1;
 while i < size(T_hw_arr_cha,1)
-    find_zero = find(T_hw_arr_cha(i+1,1:end) == 0);
+    find_zero = find(T_hw_arr_cha(i+1,:) == 0);
+    if isempty(find_zero)
+        find_zero = size(T_hw_arr_cha,2);
+    end
     plot(linspace(0,1,length(T_hw_arr_cha(i+1,1:(find_zero(1) - 1)))), T_hw_arr_cha(i+1,1:(find_zero(1) - 1)))
     i = i+1;
 end
