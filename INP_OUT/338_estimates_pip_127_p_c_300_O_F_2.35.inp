@@ -1,7 +1,7 @@
 problem rocket eq
     p(psi) = 300
     o/f = 2.35
-    pip = 150
+    pip = 300
 reac
     fuel = RP-1
     ox = O2(L)

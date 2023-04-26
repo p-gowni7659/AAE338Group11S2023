@@ -23,7 +23,7 @@ chamberGraphs = 1;
 pressureExit = 1; %psia
 pressureChamber = 300; %psia
 OF = 2.35;
-mdot_engine = .3; %kg/s propellant mass flow rate (iterate this variable?)
+mdot_engine = 1; %kg/s propellant mass flow rate (iterate this variable?)
 contractionRatio = 3;
 Lstar = .1; %meters, 9.84 in
 T_hw = 1088; %K -Inconel X750 Wall Temperature (1500 F)
@@ -133,7 +133,7 @@ T0stari = heltemp_init * ((1 + gamma_init * helmach_init^2)^2 / (2 * (gamma_init
 
 
 % For Loop Conditions
-step = 0.001;
+step = 0.0001;
 Tmax = 1088; % Temperature at which material properties fall apart
 Mmax = 1; % Max Mach number allowed in code
 steps = floor(2*cham_chan_loops*chamber_L / step); % Number of steps in the foor loop
@@ -240,7 +240,7 @@ disp('Simulation Complete');
 
 % For Loop Conditions
 step_down = chan_ID + 2*wall_thick;
-step_around = 0.001;
+step_around = 0.0001;
 Tmax = 1088; % Temperature at which material properties fall apart
 Mmax = 1; % Max Mach number allowed in code
 steps_down = floor((contract_L + nozzle_L)/ step_down); % Number of steps in the foor loop
@@ -390,13 +390,9 @@ s.EdgeColor = 'none';
 % Plots Graphs
 if chamberGraphs
     coolinggrapher(M_hel_arr, qdot_arr, T_hw_arr, T_cw_arr, T_hel_arr,...
-<<<<<<< HEAD
         P_hel_arr, Aratio, xplot, A, T_gas, hbartz, Qdot_x, M_x, rho_x,...
         T_x, V_x, x3, x4, T_hw_arr_cha)
-=======
-        P_hel_arr, Aratio, xplot, A, T_gas, h_g_x, Qdot_x, M_x, rho_x,...
-        T_x, V_x, x3, x4, T_hw_arr_cha, T_hw)
->>>>>>> 7585974b661f45ce595a2e1cf62430b1c28f79e4
+
 end
 
 
