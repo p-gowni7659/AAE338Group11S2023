@@ -114,9 +114,15 @@ x4 = sqrt(A(1)/pi) * ones(length(x3));
 %% Helium Initial Conditions/Loop
 %Initial Helium Pressure
 Chambertemp = T_cns; %K
-heltemp_init = 200; %K
-helpress_init = 2e6;%Pa
+heltemp_stag = 130;
+helpress_stag = 41e6;
+Cp_stag = py.CoolProp.CoolProp.PropsSI("C","T",heltemp_stag,"P", helpress_init,"Helium");
+Cv_stag = py.CoolProp.CoolProp.PropsSI("O","T",heltemp_stag,"P", helpress_init,"Helium");
+gamma_stag = Cp_stag/Cv_stag;
 helmach_init = 0.3;
+heltemp_init = heltemp_stag / (1+ (((gamma_stag-1)/2) * helmach_init^2)); %K
+helpress_init = helpress_stag / ((1+ (((gamma_stag-1)/2) * helmach_init^2))^(gamma_stag/(gamma_stag-1)));
+
 h_gas = h_g_x(1);
 k_wall = k;
 wall_thick = 2*chan_t;
@@ -328,37 +334,41 @@ for j = 1:steps_down
         T_hw_arr_cha(j,i) = T_hw;
 
         % Break Conditions
-    Tbreak = T_hw > Tmax;
-    MmaxBreak = Me > Mmax;
-    
-    % Checks to see if the Mach Number has decreased
-    if i > 1
-        MdecBreak = Me < M_hel_arr_cha(i-1);
-    else
-        MdecBreak = false;
-    end
-    
-    % Breaks loop if conditions are met
-    breakLoop = Tbreak || MmaxBreak || MdecBreak;
-    if breakLoop
-        % Displays data that could break loop
-        disp('Max Value was reached and Loop Was Broken');
-        disp('Final Values:');
-        fprintf('Hot Wall Temperature: %0.3f\n', T_hw)
-        fprintf('Mach Number:          %0.3f\n', Me);
-        if i ~= 1
-            fprintf('Previous Mach:    %0.3f\n', M_hel_arr_cha(i-1));
+        Tbreak = T_hw > Tmax;
+        MmaxBreak = Me > Mmax;
+        
+        % Checks to see if the Mach Number has decreased
+        if i > 1
+            MdecBreak = Me < M_hel_arr_cha(i-1);
         else
-            disp('Loop Broke on first iteration.');
+            MdecBreak = false;
         end
-
-        % Breaks Loop
-        break
-    end
+        
+        % Breaks loop if conditions are met
+        breakLoop = Tbreak || MmaxBreak || MdecBreak;
+        if breakLoop
+            % Displays data that could break loop
+            disp('Max Value was reached and Loop Was Broken');
+            disp('Final Values:');
+            fprintf('Hot Wall Temperature: %0.3f\n', T_hw)
+            fprintf('Mach Number:          %0.3f\n', Me);
+            if i ~= 1
+                fprintf('Previous Mach:    %0.3f\n', M_hel_arr_cha(i-1));
+            else
+                disp('Loop Broke on first iteration.');
+            end
+    
+            % Breaks Loop
+            break
+        end
     
     end
-
+    
+    percentDone = j / steps_down * 100;
+    fprintf('%0.2f Percent Complete\n', percentDone);
 end
+disp('Simulation Complete');
+
 M_hel_arr_cha(M_hel_arr_cha==0) = NaN;
 figure()
 title('Helium Mach')
