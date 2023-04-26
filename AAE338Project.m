@@ -367,6 +367,9 @@ for j = 1:steps_down
     percentDone = j / steps_down * 100;
     fprintf('%0.2f Percent Complete\n', percentDone);
 end
+
+mdot_hel_total = (ceil(cham_chan_num)/2 + steps_down)*mdot;
+
 disp('Simulation Complete');
 
 M_hel_arr_cha(M_hel_arr_cha==0) = NaN;
