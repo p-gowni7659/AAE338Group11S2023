@@ -46,55 +46,55 @@ title('Rocket Nozzle and Chamber Cross-Section');
 axis equal
 
 
-figure()
-plot(Aratio, T_gas)
-grid on;
-title('Nozzle Temperature Gas Distribution [Correlation]')
-xlabel("Area Ratio [A/At]")
-ylabel('Gas Temperature [K]')
-
-figure()
-plot(Aratio, h_g_x)
-grid on;
-title('Nozzle Convective Heat Transfer Coeff Distribution')
-xlabel("Area Ratio [A/At]")
-
-figure()
-plot(Aratio, Qdot_x)
-grid on;
-title('Nozzle Qdot Distribution')
-xlabel("Area Ratio [A/At]")
-ylabel('Qdot')
-
-
-
-
-plot(Aratio, M_x)
-grid on;
-title('Nozzle Mach Number Distribution')
-xlabel("Area Ratio [A/At]")
-ylabel('Mach Number')
-
-figure()
-plot(Aratio, rho_x)
-grid on;
-title('Nozzle Density Distribution')
-xlabel("Area Ratio [A/At]")
-ylabel('Density [kg/m^3]')
-
-figure()
-plot(Aratio, T_x)
-grid on;
-title('Nozzle Temperature Distribution [Isentropic]')
-xlabel("Area Ratio [A/At]")
-ylabel('Temperature [K]')
-
-figure()
-plot(Aratio, V_x)
-grid on;
-title('Nozzle Velocity Distribution')
-xlabel("Area Ratio [A/At]")
-ylabel('Velocity [m/s]')
+% figure()
+% plot(Aratio, T_gas)
+% grid on;
+% title('Nozzle Temperature Gas Distribution [Correlation]')
+% xlabel("Area Ratio [A/At]")
+% ylabel('Gas Temperature [K]')
+% 
+% figure()
+% plot(Aratio, h_g_x)
+% grid on;
+% title('Nozzle Convective Heat Transfer Coeff Distribution')
+% xlabel("Area Ratio [A/At]")
+% 
+% figure()
+% plot(Aratio, Qdot_x)
+% grid on;
+% title('Nozzle Qdot Distribution')
+% xlabel("Area Ratio [A/At]")
+% ylabel('Qdot')
+% 
+% 
+% 
+% 
+% plot(Aratio, M_x)
+% grid on;
+% title('Nozzle Mach Number Distribution')
+% xlabel("Area Ratio [A/At]")
+% ylabel('Mach Number')
+% 
+% figure()
+% plot(Aratio, rho_x)
+% grid on;
+% title('Nozzle Density Distribution')
+% xlabel("Area Ratio [A/At]")
+% ylabel('Density [kg/m^3]')
+% 
+% figure()
+% plot(Aratio, T_x)
+% grid on;
+% title('Nozzle Temperature Distribution [Isentropic]')
+% xlabel("Area Ratio [A/At]")
+% ylabel('Temperature [K]')
+% 
+% figure()
+% plot(Aratio, V_x)
+% grid on;
+% title('Nozzle Velocity Distribution')
+% xlabel("Area Ratio [A/At]")
+% ylabel('Velocity [m/s]')
 
 figure()
 find_zero = find(T_hw_arr_cha(1,:) == 0);
