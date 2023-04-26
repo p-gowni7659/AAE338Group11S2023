@@ -15,15 +15,15 @@ clear;
 clc;
 
 %% Graph Settings
-chamberGraphs = false;
+chamberGraphs = 1;
 
 %% Rocket Engine Initialization
 pressureExit = 1; %psia
-pressureChamber = 400; %psia
+pressureChamber = 80; %psia
 OF = 2.35;
-mdot_engine = 4; %kg/s propellant mass flow rate (iterate this variable?)
+mdot_engine = 0.5; %kg/s propellant mass flow rate (iterate this variable?)
 contractionRatio = 3;
-Lstar = 1.143; %meters, 45 in
+Lstar = 0.25; %meters, 45 in
 T_hw = 1088; %K -Inconel X750 Wall Temperature (1500 F)
 tensile = 5.537*10^8; %Pa - Tensile strength at 1088K (1500 F) 
 k = 23; %W/m-K -Nozzle wall made from Inconel X750 @ 1500F
