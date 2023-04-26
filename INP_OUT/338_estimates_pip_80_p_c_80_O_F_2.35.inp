@@ -1,0 +1,9 @@
+problem rocket eq
+    p(psi) = 80
+    o/f = 2.35
+    pip = 80
+reac
+    fuel = RP-1
+    ox = O2(L)
+outp trans
+end
