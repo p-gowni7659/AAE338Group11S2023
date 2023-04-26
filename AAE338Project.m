@@ -22,9 +22,9 @@ chamberGraphs = 1;
 pressureExit = 1; %psia
 pressureChamber = 400; %psia
 OF = 2.35;
-mdot_engine = .8; %kg/s propellant mass flow rate (iterate this variable?)
+mdot_engine = .05; %kg/s propellant mass flow rate (iterate this variable?)
 contractionRatio = 3;
-Lstar = .5; %meters, 9.84 in
+Lstar = .1; %meters, 9.84 in
 T_hw = 1088; %K -Inconel X750 Wall Temperature (1500 F)
 tensile = 5.537*10^8; %Pa - Tensile strength at 1088K (1500 F) 
 k_wall = 23; %W/m-K -Nozzle wall made from Inconel X750 @ 1500F
@@ -34,7 +34,7 @@ diverge_num = 10000; %points in diverging section
 % Channel Initial Conditions
 chan_ID = 0.002; %m (3 mm)
 wall_thick = 0.001;
-cham_chan_loops = 2; %Number of switch backs chamber has
+cham_chan_loops = 5; %Number of switch backs chamber has
 
 %Initial Helium Conditons
 heltemp_init = 130;
