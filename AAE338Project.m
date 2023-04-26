@@ -43,7 +43,7 @@ nameString = strcat('338_estimates_pip_', num2str(int8(pressureChamber / pressur
 inputName = append(nameString, '.inp');
 outputName = append(nameString, '.out');
 
-[Isp, CStar, expansionRatio, specificHeatRatio, combustionTemperature, cp, conductivity, enthalpy, rho0] = PSP_1DOF_CEA_function_wrapper(pressureChamber,pressureExit, OF, nameString, 0);
+[Isp, CStar, expansionRatio, specificHeatRatio, combustionTemperature, ~, ~, ~, rho0] = PSP_1DOF_CEA_function_wrapper(pressureChamber,pressureExit, OF, nameString, 0);
 movefile(inputName, 'INP_OUT');
 movefile(outputName, 'INP_OUT');
 delete(append(pwd, '\PSP_CEA_function_wrapper\', inputName));
@@ -363,7 +363,7 @@ M_hel_arr_cha(M_hel_arr_cha==0) = NaN;
 figure()
 title('Helium Mach')
 s = pcolor(M_hel_arr_cha);
-s.FaceColor = 'interp';
+%s.FaceColor = 'interp';
 colorbar
 s.EdgeColor = 'none';
 
@@ -371,7 +371,7 @@ P_hel_arr_cha(P_hel_arr_cha==0) = NaN;
 figure()
 title('Pressure')
 s = pcolor(P_hel_arr_cha./1000);
-s.FaceColor = 'interp';
+%s.FaceColor = 'interp';
 colorbar
 s.EdgeColor = 'none';
 
@@ -379,7 +379,7 @@ qdot_arr_cha(qdot_arr_cha==0) = NaN;
 figure()
 title('Qdot')
 s = pcolor(qdot_arr_cha./1000);
-s.FaceColor = 'interp';
+%s.FaceColor = 'interp';
 colorbar
 s.EdgeColor = 'none';
 %% Bottom of Script
