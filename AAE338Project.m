@@ -245,7 +245,7 @@ step_down = chan_ID + 2*chan_t;
 step_around = 0.001;
 Tmax = 1088; % Temperature at which material properties fall apart
 Mmax = 1; % Max Mach number allowed in code
-steps_down = floor((contract_L + nozzle_L)/ step); % Number of steps in the foor loop
+steps_down = floor((contract_L + nozzle_L)/ step_down); % Number of steps in the foor loop
 
 max_rad = sqrt(A(end)/pi);
 max_tubelen = 2*pi*(max_rad + chan_t + chan_ID/2);
