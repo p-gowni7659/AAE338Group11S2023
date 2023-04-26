@@ -133,7 +133,7 @@ T0stari = heltemp_init * ((1 + gamma_init * helmach_init^2)^2 / (2 * (gamma_init
 
 
 % For Loop Conditions
-step = 0.0001;
+step = 0.01;
 Tmax = 1088; % Temperature at which material properties fall apart
 Mmax = 1; % Max Mach number allowed in code
 steps = floor(2*cham_chan_loops*chamber_L / step); % Number of steps in the foor loop
@@ -240,7 +240,8 @@ disp('Simulation Complete');
 
 % For Loop Conditions
 step_down = chan_ID + 2*wall_thick;
-step_around = 0.0001;
+step_around = 0.01;
+
 Tmax = 1088; % Temperature at which material properties fall apart
 Mmax = 1; % Max Mach number allowed in code
 steps_down = floor((contract_L + nozzle_L)/ step_down); % Number of steps in the foor loop
@@ -367,22 +368,25 @@ fprintf("Helium Mass Flow Rate: %0.2f kg/s \n", mdot_hel_total)
 disp('Simulation Complete');
 
 M_hel_arr_cha(M_hel_arr_cha==0) = NaN;
+xscale = [0:step_around:(size(M_hel_arr_cha,2)-1)*step_around];
+yscale = [0:step_down:(size(M_hel_arr_cha,1)-1)*step_down];
 figure()
-title('Helium Mach')
-s = pcolor(M_hel_arr_cha);
+s = pcolor(xscale,yscale,M_hel_arr_cha);
 colorbar
 s.EdgeColor = 'none';
+title('Helium Mach Number Distribution in Nozzle Loop')
+
 
 P_hel_arr_cha(P_hel_arr_cha==0) = NaN;
 figure()
-title('Pressure')
 s = pcolor(P_hel_arr_cha./1000);
 colorbar
 s.EdgeColor = 'none';
+title('Helium Pressure Distribution in Nozzle Loop [kPa]')
 
 qdot_arr_cha(qdot_arr_cha==0) = NaN;
 figure()
-title('Qdot')
+title('Steady State Heat Transfer Distribution in Nozzle Loop [W/(m^2-K)]')
 s = pcolor(qdot_arr_cha);
 colorbar
 s.EdgeColor = 'none';
