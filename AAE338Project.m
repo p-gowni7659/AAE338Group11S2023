@@ -21,9 +21,9 @@ chamberGraphs = 1;
 %% Value Initialization
 % Rocket Engine Initial Conditions
 pressureExit = 1; %psia
-pressureChamber = 400; %psia
+pressureChamber = 300; %psia
 OF = 2.35;
-mdot_engine = .5; %kg/s propellant mass flow rate (iterate this variable?)
+mdot_engine = .3; %kg/s propellant mass flow rate (iterate this variable?)
 contractionRatio = 3;
 Lstar = .1; %meters, 9.84 in
 T_hw = 1088; %K -Inconel X750 Wall Temperature (1500 F)
@@ -38,8 +38,8 @@ wall_thick = 0.001;
 cham_chan_loops = 1; %Number of switch backs chamber has
 
 %Initial Helium Conditons
-heltemp_init = 130;
-helpress_init = 50e6;
+heltemp_init = 120;
+helpress_init = 80e6;
 helmach_init = 0.4;
 Cp_init = py.CoolProp.CoolProp.PropsSI("C","T",heltemp_init,"P", helpress_init,"Helium");
 Cv_init = py.CoolProp.CoolProp.PropsSI("O","T",heltemp_init,"P", helpress_init,"Helium");
@@ -116,17 +116,18 @@ xplot = [x1 x2];
 x3 = linspace(-chamber_L, -contract_L, 5);
 x4 = sqrt(A(1)/pi) * ones(length(x3));
 
-hbartz = hgcalc(gma, visccea, Prcea, Cpcea, Ac/At, 6.205, CStar, Dt);
-h_g_x = (rho_x .* V_x) .^ 0.8; %Convection Coefficent Correlation
-h_g_x = hbartz/h_g_x(1)*h_g_x;
-Qdot_x = h_g_x .* (T_gas - T_hw);
+hbartz = hgcalc(gma, visccea, Prcea, Cpcea, A./At, pressureChamber * 0.0689476, CStar, Dt);
+%h_g_x = (rho_x .* V_x) .^ 0.8; %Convection Coefficent Correlation
+%h_g_x = hbartz/h_g_x(1)*h_g_x;
+
+Qdot_x = hbartz .* (T_gas - T_hw);
 
 Thrust = mdot_engine*V_x(end) + pressureExit*A(end);
 
 %% Chamber Cooling Loop
 
 %Initial Conditons for Chamber Loop
-h_gas = hgcalc(gma, visccea, Prcea, Cpcea, Ac/At, 6.205, CStar, Dt);
+h_gas = hbartz(1);
 Tstag_hel_init = heltemp_init * (1+((gamma_init-1)/2)*helmach_init);
 T0stari = heltemp_init * ((1 + gamma_init * helmach_init^2)^2 / (2 * (gamma_init + 1) * helmach_init^2));
 
@@ -262,7 +263,7 @@ disp('Simulation Running...');
 
 for j = 1:steps_down
 
-    [hgas,area,Tgas,tubelen] = nozzleprops(chan_ID, A, h_g_x,...
+    [hgas,area,Tgas,tubelen] = nozzleprops(chan_ID, A, hbartz,...
         wall_thick, j,T_gas,converge_num,contract_L,diverge_num, nozzle_L);
 
 
@@ -389,7 +390,7 @@ s.EdgeColor = 'none';
 % Plots Graphs
 if chamberGraphs
     coolinggrapher(M_hel_arr, qdot_arr, T_hw_arr, T_cw_arr, T_hel_arr,...
-        P_hel_arr, Aratio, xplot, A, T_gas, h_g_x, Qdot_x, M_x, rho_x,...
+        P_hel_arr, Aratio, xplot, A, T_gas, hbartz, Qdot_x, M_x, rho_x,...
         T_x, V_x, x3, x4, T_hw_arr_cha)
 end
 
