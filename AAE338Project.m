@@ -238,13 +238,6 @@ end
 % Prints that the simulation is complete
 disp('Simulation Complete');
 
-% Plots Graphs
-if chamberGraphs
-    coolinggrapher(M_hel_arr, qdot_arr, T_hw_arr, T_cw_arr, T_hel_arr,...
-        P_hel_arr, Aratio, xplot, A, T_gas, h_g_x, Qdot_x, M_x, rho_x,...
-        T_x, V_x, x3, x4)
-end
-
 %% Nozzle Cooling Loop
 
 % For Loop Conditions
@@ -392,6 +385,14 @@ s = pcolor(qdot_arr_cha./1000);
 %s.FaceColor = 'interp';
 colorbar
 s.EdgeColor = 'none';
+
+% Plots Graphs
+if chamberGraphs
+    coolinggrapher(M_hel_arr, qdot_arr, T_hw_arr, T_cw_arr, T_hel_arr,...
+        P_hel_arr, Aratio, xplot, A, T_gas, h_g_x, Qdot_x, M_x, rho_x,...
+        T_x, V_x, x3, x4, T_hw_arr_cha)
+end
+
 %% Bottom of Script
 % Resets Matlabs Path preference so it doesn't mess up your matlab
 clear CEApath INPPath funcPath

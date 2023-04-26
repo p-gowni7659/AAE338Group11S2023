@@ -1,4 +1,4 @@
-function [] = coolinggrapher(M_hel_arr, qdot_arr, T_hw_arr, T_cw_arr, T_hel_arr, P_hel_arr, Aratio, xplot, A, T_gas, h_g_x, Qdot_x, M_x, rho_x, T_x, V_x, x3, x4)
+function [] = coolinggrapher(M_hel_arr, qdot_arr, T_hw_arr, T_cw_arr, T_hel_arr, P_hel_arr, Aratio, xplot, A, T_gas, h_g_x, Qdot_x, M_x, rho_x, T_x, V_x, x3, x4, T_hw_arr_cha)
 
 figure()
 plot(M_hel_arr, T_hel_arr)
@@ -95,3 +95,10 @@ grid on;
 title('Nozzle Velocity Distribution')
 xlabel("Area Ratio [A/At]")
 ylabel('Velocity [m/s]')
+
+figure()
+find_zero = find(T_hel_arr_cha(1,1:end) == 0);
+plot(linspace(0,1,length(T_hw_arr_cha(1,1:(find_zero(1) - 1)))), T_hw_arr_cha(1,1:(find_zero(1) - 1)))
+grid on
+if
+end
