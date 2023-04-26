@@ -390,7 +390,7 @@ s.EdgeColor = 'none';
 if chamberGraphs
     coolinggrapher(M_hel_arr, qdot_arr, T_hw_arr, T_cw_arr, T_hel_arr,...
         P_hel_arr, Aratio, xplot, A, T_gas, h_g_x, Qdot_x, M_x, rho_x,...
-        T_x, V_x, x3, x4, T_hw_arr_cha)
+        T_x, V_x, x3, x4, T_hw_arr_cha, T_hw)
 end
 
 
