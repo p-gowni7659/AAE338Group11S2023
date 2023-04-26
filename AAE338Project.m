@@ -115,7 +115,7 @@ x4 = sqrt(A(1)/pi) * ones(length(x3));
 %Initial Helium Pressure
 Chambertemp = T_cns; %K
 heltemp_init = 200; %K
-helpress_init = 1000000;%Pa
+helpress_init = 2e6;%Pa
 helmach_init = 0.3;
 h_gas = h_g_x(1);
 k_wall = k;
@@ -243,7 +243,7 @@ end
 
 % For Loop Conditions
 step_down = chan_ID + 2*chan_t;
-step_around = 0.02;
+step_around = 0.005;
 Tmax = 1088; % Temperature at which material properties fall apart
 Mmax = 1; % Max Mach number allowed in code
 steps_down = floor((contract_L + nozzle_L)/ step); % Number of steps in the foor loop
@@ -326,6 +326,35 @@ for j = 1:steps_down
         qdot_arr_cha(j,i) = q_dot;
         T_cw_arr_cha(j,i) = T_cw;
         T_hw_arr_cha(j,i) = T_hw;
+
+        % Break Conditions
+    Tbreak = T_hw > Tmax;
+    MmaxBreak = Me > Mmax;
+    
+    % Checks to see if the Mach Number has decreased
+    if i > 1
+        MdecBreak = Me < M_hel_arr_cha(i-1);
+    else
+        MdecBreak = false;
+    end
+    
+    % Breaks loop if conditions are met
+    breakLoop = Tbreak || MmaxBreak || MdecBreak;
+    if breakLoop
+        % Displays data that could break loop
+        disp('Max Value was reached and Loop Was Broken');
+        disp('Final Values:');
+        fprintf('Hot Wall Temperature: %0.3f\n', T_hw)
+        fprintf('Mach Number:          %0.3f\n', Me);
+        if i ~= 1
+            fprintf('Previous Mach:    %0.3f\n', M_hel_arr_cha(i-1));
+        else
+            disp('Loop Broke on first iteration.');
+        end
+
+        % Breaks Loop
+        break
+    end
     
     end
 
