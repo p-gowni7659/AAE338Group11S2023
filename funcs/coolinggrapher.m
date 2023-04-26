@@ -113,4 +113,3 @@ end
 xlabel("Normalized Channel Length")
 ylabel("Chamber Side Temperature (K)")
 title("Chamber Side Temperature vs Channel Length", "For Channels in Converging/Diverging Section")
-legend("1","2","3")
