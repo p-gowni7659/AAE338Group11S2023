@@ -359,8 +359,7 @@ for j = 1:steps_down
     percentDone = j / steps_down * 100;
     fprintf('%0.2f Percent Complete\n', percentDone);
 end
-%%
-%Plotting
+%% Thrust Calc and Plotting
 mdot_hel_total = (ceil(cham_chan_num)/(cham_chan_loops*2) + steps_down)*mdot;
 
 fprintf("Engine Thrust:         %0.2f N \n", Thrust)
@@ -438,3 +437,31 @@ clear CEApath INPPath funcPath
 
 restoredefaultpath;
 clear RESTOREDEFAULTPATH_EXECUTED
+
+
+
+
+%% Referenced Functions
+% This example includes the external functions (No CEA program files)
+%
+% <include>funcs/RayleighFlow.m</include>
+%
+% <include>funcs/nozzleprops.m</include>
+%
+% <include>funcs/getTempStagNew.m</include>
+%
+% <include>funcs/getRe.m</include>
+%
+% <include>funcs/getHc.m</include>
+%
+% <include>funcs/getChamberSize.m</include>
+%
+% <include>funcs/coolinggrapher.m</include>
+%
+% <include>funcs/convergeTemp.m</include>
+%
+% <include>funcs/PSP_1DOF_CEA_function_wrapper.m</include>
+%
+% The file content above is properly syntax highlighted.
+
+
