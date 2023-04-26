@@ -146,7 +146,7 @@ T_hel_arr = zeros(1, steps);
 P_hel_arr = zeros(1, steps);
 M_hel_arr = zeros(1, steps);
 mdot_arr = zeros(1, steps);
-
+rho_arr = zeros(1, steps);
 % Informs user Loop is Running
 disp('Simulation Running...');
 
@@ -197,7 +197,7 @@ for i = 1:steps
     P_hel_arr(i) = Pi;
     M_hel_arr(i) = Mi;
     mdot_arr(i) = mdot;
-
+    rho_arr(i) = rho_i;
     % Storing Forced Convection Results
     qdot_arr(i) = q_dot;
     T_cw_arr(i) = T_cw;
@@ -427,7 +427,7 @@ ylabel('Distance from End of Chamber [m]')
 if chamberGraphs
     coolinggrapher(M_hel_arr, qdot_arr, T_hw_arr, T_cw_arr, T_hel_arr,...
         P_hel_arr, Aratio, xplot, A, T_gas, hbartz, Qdot_x, M_x, rho_x,...
-        T_x, V_x, x3, x4, T_hw_arr_cha, M_hel_arr_cha, P_hel_arr_cha, qdot_arr_cha, rho_arr_cha, T_hw_arr_nozz)
+        T_x, V_x, x3, x4, T_hw_arr_cha, M_hel_arr_cha, P_hel_arr_cha, qdot_arr_cha, rho_arr_cha, T_hw_arr_nozz, rho_arr)
 
 end
 
