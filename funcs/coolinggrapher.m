@@ -1,11 +1,18 @@
-function [] = coolinggrapher(M_hel_arr, qdot_arr, T_hw_arr, T_cw_arr, T_hel_arr, P_hel_arr, Aratio, xplot, A, T_gas, h_g_x, Qdot_x, M_x, rho_x, T_x, V_x, x3, x4, T_hw_arr_cha, T_hw, M_hel_arr_cha, P_hel_arr_cha, qdot_arr_cha, rho_arr_cha, T_hw_arr_nozz, rho_arr)
+function [] = coolinggrapher(M_hel_arr, qdot_arr, T_hw_arr, T_cw_arr, T_hel_arr, P_hel_arr, Aratio, xplot, A, T_gas, h_g_x, Qdot_x, M_x, rho_x, T_x, V_x, x3, x4, T_hw_arr_cha, T_hw, M_hel_arr_cha, P_hel_arr_cha, qdot_arr_cha, rho_arr_cha, T_hw_arr_nozz, rho_arr, h_gas)
+
+figure()
+plot(linspace(0,100,length(M_hel_arr)), M_hel_arr)
+grid on
+xlabel("Distance Normalized to Loop Length (%)")
+ylabel("Mach Number")
+title('Helium Mach Number Distribution in Chamber Loop')
 
 figure()
 plot(linspace(0,100,length(rho_arr)), rho_arr)
 grid on
 xlabel("Distance Normalized to Loop Length (%)")
-ylabel("Helium Desnity [kg/m^3]")
-title('Helium Desnity Distribution in Chamber Loop')
+ylabel("Helium Density [kg/m^3]")
+title('Helium Density Distribution in Chamber Loop')
 
 plot(linspace(0,100,length(T_hel_arr)), T_hel_arr)
 grid on
