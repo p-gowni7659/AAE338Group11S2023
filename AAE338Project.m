@@ -123,7 +123,7 @@ Thrust = mdot_engine*V_x(end) + pressureExit*A(end);
 %% Chamber Cooling Loop
 
 %Initial Conditons for Chamber Loop
-h_gas = h_g_x(1);
+h_gas = hgcalc(gma, visccea, Prcea, Cpcea, Ac/At, 6.205, CStar, Dt);
 Tstag_hel_init = heltemp_init * (1+((gamma_init-1)/2)*helmach_init);
 T0stari = heltemp_init * ((1 + gamma_init * helmach_init^2)^2 / (2 * (gamma_init + 1) * helmach_init^2));
 
