@@ -363,8 +363,12 @@ for j = 1:steps_down
         end
     
     end
-
+    
+    percentDone = j / steps_down * 100;
+    fprintf('%0.2f Percent Complete\n', percentDone);
 end
+disp('Simulation Complete');
+
 M_hel_arr_cha(M_hel_arr_cha==0) = NaN;
 figure()
 title('Helium Mach')
