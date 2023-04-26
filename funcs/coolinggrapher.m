@@ -173,7 +173,7 @@ ylabel("Channel Density (kg/m^3)")
 title("Density vs Channel Length for Throat")
 
 figure()
-plot(linspace(0,100,length(T_hw_arr_nozz(i_final,1:(find_zero_final(1) - 1)))),T_hw_arr_nozz(i_final,1:(find_zero_final(1) - 1)))
+plot(linspace(0,100,length(T_hw_arr_cha(i_final,1:(find_zero_final(1) - 1)))),T_hw_arr_cha(i_final,1:(find_zero_final(1) - 1)))
 grid on
 xlabel("Normalized Channel Length (%)")
 ylabel("Channel Temperature (K)")
