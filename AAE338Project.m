@@ -109,6 +109,7 @@ At = (mdot_engine * CStar) / P0; %m^2
 Dt = 2 * sqrt(At/pi);
 Dc = sqrt((At * contractionRatio) / pi) * 2;
 De = sqrt((At * expansionRatio) / pi) * 2;
+Ac = pi* (Dc/2)^2;
 
 A = ((At ./ M_x) .* (((2 + (gma - 1) .* M_x .^ 2) ./ (gma + 1)) .^ ((gma + 1) ./ (2 .* (gma - 1)))));
 
