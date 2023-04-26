@@ -397,7 +397,7 @@ s = pcolor(xscale,yscale,qdot_arr_cha);
 s.EdgeColor = 'none';
 a=colorbar;
 title('Steady State Heat Transfer Distribution in Nozzle Loop')
-ylabel(a,'Heat Transfer [W/(m^2-K)]')
+ylabel(a,'Heat Transfer [W/m^2]')
 xlabel('Circumfrential Distance [m]')
 ylabel('Distance from End of Chamber [m]')
 

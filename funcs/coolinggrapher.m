@@ -1,34 +1,40 @@
 function [] = coolinggrapher(M_hel_arr, qdot_arr, T_hw_arr, T_cw_arr, T_hel_arr, P_hel_arr, Aratio, xplot, A, T_gas, h_g_x, Qdot_x, M_x, rho_x, T_x, V_x, x3, x4, T_hw_arr_cha, T_hw)
 
 figure()
-plot(linspace(0,1,length(T_hel_arr)), T_hel_arr)
+
+plot(linspace(0,100,length(T_hel_arr)), T_hel_arr)
 grid on
-xlabel("Linearized Distance Around Chamber (%)")
-ylabel("Helium Temperature")
+xlabel("Distance Normalized to Loop Length (%)")
+ylabel("Helium Temperature [K]")
+title('Helium Temperature Distribution in Chamber Loop')
 
 figure()
-plot(linspace(0,1,length(T_hel_arr)), T_hw_arr)
+plot(linspace(0,100,length(T_hel_arr)), T_hw_arr)
 grid on
-xlabel("Linearized Distance Around Chamber (%)")
-ylabel("Chamber Side Wall Temperature")
+xlabel("Distance Normalized to Loop Length (%)")
+ylabel("Chamber Side Wall Temperature [K]")
+title('Chamber Wall Temperature Distribution in Chamber Loop')
 
 figure()
-plot(linspace(0,1,length(T_hel_arr)), T_cw_arr)
+plot(linspace(0,100,length(T_hel_arr)), T_cw_arr)
 grid on
-xlabel("Linearized Distance Around Chamber (%)")
-ylabel("Channel Wall Temperature")
+xlabel("Distance Normalized to Loop Length (%)")
+ylabel("Channel Wall Temperature [K]")
+title('Channel Wall Temperature Distribution in Chamber Loop')
 
 figure()
-plot(linspace(0,1,length(T_hel_arr)), qdot_arr)
+plot(linspace(0,100,length(T_hel_arr)), qdot_arr)
 grid on
-xlabel("Linearized Distance Around Chamber (%)")
-ylabel("Specific heat transfer")
+xlabel("Distance Normalized to Loop Length (%)")
+ylabel("Specific heat transfer [W/(m^2)]")
+title("Steady State Heat Transfer Distribution in Chamber Loop")
 
 figure()
-plot(linspace(0,1,length(T_hel_arr)), P_hel_arr)
+plot(linspace(0,100,length(T_hel_arr)), P_hel_arr./1000)
 grid on
-xlabel("Linearized Distance Around Chamber (%)")
-ylabel("Helium Static Pressure")
+xlabel("Distance Normalized to Loop Length (%)")
+ylabel("Helium Static Pressure [kPa]")
+title('Helium Static Pressure Distribution in Chamber Loop')
 
 
 
@@ -40,8 +46,8 @@ grid on
 hold on
 plot(x3, x4, 'color', [0, 0.4470, 0.7410])
 yline(0)
-xlabel('Radial distance (m)');
-ylabel('y (m)');
+xlabel('Linear Distance Referenced from Nozzle Throat [m]');
+ylabel('Radial Distance [m]');
 title('Rocket Nozzle and Chamber Cross-Section');
 axis equal
 
@@ -98,7 +104,7 @@ axis equal
 
 figure()
 find_zero = find(T_hw_arr_cha(1,:) == 0);
-plot(linspace(0,1,length(T_hw_arr_cha(1,1:(find_zero(1) - 1)))), T_hw_arr_cha(1,1:(find_zero(1) - 1)))
+plot(linspace(0,100,length(T_hw_arr_cha(1,1:(find_zero(1) - 1)))), T_hw_arr_cha(1,1:(find_zero(1) - 1)))
 grid on
 hold on
 i = 1;
@@ -107,10 +113,10 @@ while i < size(T_hw_arr_cha,1)
     if isempty(find_zero)
         find_zero = size(T_hw_arr_cha,2);
     end
-    plot(linspace(0,1,length(T_hw_arr_cha(i+1,1:(find_zero(1) - 1)))), T_hw_arr_cha(i+1,1:(find_zero(1) - 1)))
+    plot(linspace(0,100,length(T_hw_arr_cha(i+1,1:(find_zero(1) - 1)))), T_hw_arr_cha(i+1,1:(find_zero(1) - 1)))
     i = i+1;
 end
 yline(1088,"LineWidth",3)
 xlabel("Normalized Channel Length")
-ylabel("Chamber Side Temperature (K)")
-title("Chamber Side Temperature vs Channel Length", "For Channels in Converging/Diverging Section")
+ylabel("Chamber Side Temperature [K]")
+title("Chamber Side Temperature vs Channel Length in Nozzle", "For Channels in Converging/Diverging Section")
