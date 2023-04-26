@@ -361,8 +361,8 @@ end
 
 mdot_hel_total = (ceil(cham_chan_num)/(cham_chan_loops*2) + steps_down)*mdot;
 
-disp(Thrust)
-disp(mdot_hel_total)
+fprintf("Engine Thrust:         %0.2f N \n", Thrust)
+fprintf("Helium Mass Flow Rate: %0.2f kg/s \n", mdot_hel_total)
 
 disp('Simulation Complete');
 
@@ -390,8 +390,13 @@ s.EdgeColor = 'none';
 % Plots Graphs
 if chamberGraphs
     coolinggrapher(M_hel_arr, qdot_arr, T_hw_arr, T_cw_arr, T_hel_arr,...
+<<<<<<< HEAD
         P_hel_arr, Aratio, xplot, A, T_gas, hbartz, Qdot_x, M_x, rho_x,...
         T_x, V_x, x3, x4, T_hw_arr_cha)
+=======
+        P_hel_arr, Aratio, xplot, A, T_gas, h_g_x, Qdot_x, M_x, rho_x,...
+        T_x, V_x, x3, x4, T_hw_arr_cha, T_hw)
+>>>>>>> 7585974b661f45ce595a2e1cf62430b1c28f79e4
 end
 
 
