@@ -91,8 +91,8 @@ Qdot_x = h_g_x .* (T_gas - T_hw);
 %% Chamber
 % Channel Initial Conditions
 helpress_init = 1000000; %Pa
-chan_ID = 0.01; %m (1 cm)
-saf_fac = 2;
+chan_ID = 0.003; %m (3 mm)
+saf_fac = 3;
 chan_t = saf_fac*(helpress_init*chan_ID/(2*tensile));
 
 At = (mdot_engine * CStar) / P0; %m^2
@@ -125,7 +125,7 @@ helpress_init = helpress_stag / ((1+ (((gamma_stag-1)/2) * helmach_init^2))^(gam
 
 h_gas = h_g_x(1);
 k_wall = k;
-wall_thick = 2*chan_t;
+wall_thick = chan_t;
 Dh = chan_ID;
 Cp_init = py.CoolProp.CoolProp.PropsSI("C","T",heltemp_init,"P", helpress_init,"Helium");
 Cv_init = py.CoolProp.CoolProp.PropsSI("O","T",heltemp_init,"P", helpress_init,"Helium");
@@ -360,13 +360,15 @@ for j = 1:steps_down
     percentDone = j / steps_down * 100;
     fprintf('%0.2f Percent Complete\n', percentDone);
 end
+
+mdot_hel_total = (ceil(cham_chan_num)/2 + steps_down)*mdot;
+
 disp('Simulation Complete');
 
 M_hel_arr_cha(M_hel_arr_cha==0) = NaN;
 figure()
 title('Helium Mach')
 s = pcolor(M_hel_arr_cha);
-%s.FaceColor = 'interp';
 colorbar
 s.EdgeColor = 'none';
 
@@ -374,15 +376,13 @@ P_hel_arr_cha(P_hel_arr_cha==0) = NaN;
 figure()
 title('Pressure')
 s = pcolor(P_hel_arr_cha./1000);
-%s.FaceColor = 'interp';
 colorbar
 s.EdgeColor = 'none';
 
 qdot_arr_cha(qdot_arr_cha==0) = NaN;
 figure()
 title('Qdot')
-s = pcolor(qdot_arr_cha./1000);
-%s.FaceColor = 'interp';
+s = pcolor(qdot_arr_cha);
 colorbar
 s.EdgeColor = 'none';
 
