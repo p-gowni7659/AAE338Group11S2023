@@ -3,7 +3,6 @@ function [hgas,area,Tgas,tubelen] = nozzleprops(Dt, Area_arr, h_g_x, wallt, tube
 %Find Area at a distance x from the start of the converging section
 x = (tubenum*Dt) - (Dt/2);
 
-disp(floor(converge_num * x / contract_L))
 run = 1;
 if  floor(diverge_num * x / nozzle_L)+converge_num > length(Area_arr)
     area = Area_arr(end);
@@ -21,13 +20,9 @@ elseif x <= contract_L + nozzle_L && run == 1
     Tgas = T_gas_arr(floor(diverge_num * x / nozzle_L)+converge_num);
     hgas = h_g_x(floor(diverge_num * x / nozzle_L)+converge_num);
 elseif run == 1
-    disp("Spence Sucks")
+    disp("Max Value Reached")
 end
 nozzlerad = sqrt(area/pi);
 tubelen = 2*pi*(nozzlerad + wallt + Dt/2);
-disp(hgas)
-disp(area)
-disp(Tgas)
-disp(tubelen)
 end
 
