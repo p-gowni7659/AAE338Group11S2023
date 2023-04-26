@@ -360,8 +360,8 @@ end
 
 mdot_hel_total = (ceil(cham_chan_num)/(cham_chan_loops*2) + steps_down)*mdot;
 
-disp(Thrust)
-disp(mdot_hel_total)
+fprintf("Engine Thrust:         %0.2f N \n", Thrust)
+fprintf("Helium Mass Flow Rate: %0.2f kg/s \n", mdot_hel_total)
 
 disp('Simulation Complete');
 
