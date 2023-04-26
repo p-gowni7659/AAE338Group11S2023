@@ -116,7 +116,7 @@ x4 = sqrt(A(1)/pi) * ones(length(x3));
 Chambertemp = T_cns; %K
 heltemp_init = 200; %K
 helpress_init = 2e6;%Pa
-helmach_init = 0.3;
+helmach_init = 0.1;
 h_gas = h_g_x(1);
 k_wall = k;
 wall_thick = 2*chan_t;
@@ -243,7 +243,7 @@ end
 
 % For Loop Conditions
 step_down = chan_ID + 2*chan_t;
-step_around = 0.005;
+step_around = 0.001;
 Tmax = 1088; % Temperature at which material properties fall apart
 Mmax = 1; % Max Mach number allowed in code
 steps_down = floor((contract_L + nozzle_L)/ step); % Number of steps in the foor loop
