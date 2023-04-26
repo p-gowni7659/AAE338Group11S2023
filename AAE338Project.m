@@ -23,7 +23,7 @@ chamberGraphs = 1;
 pressureExit = 1; %psia
 pressureChamber = 300; %psia
 OF = 2.35;
-mdot_engine = 1; %kg/s propellant mass flow rate (iterate this variable?)
+mdot_engine = 0.7; %kg/s propellant mass flow rate (iterate this variable?)
 contractionRatio = 3;
 Lstar = .1; %meters, 9.84 in
 T_hw = 1088; %K -Inconel X750 Wall Temperature (1500 F)
@@ -133,7 +133,7 @@ T0stari = heltemp_init * ((1 + gamma_init * helmach_init^2)^2 / (2 * (gamma_init
 
 
 % For Loop Conditions
-step = 0.01;
+step = 0.001;
 Tmax = 1088; % Temperature at which material properties fall apart
 Mmax = 1; % Max Mach number allowed in code
 steps = floor(2*cham_chan_loops*chamber_L / step); % Number of steps in the foor loop
@@ -240,7 +240,7 @@ disp('Simulation Complete');
 
 % For Loop Conditions
 step_down = chan_ID + 2*wall_thick;
-step_around = 0.01;
+step_around = 0.001;
 
 Tmax = 1088; % Temperature at which material properties fall apart
 Mmax = 1; % Max Mach number allowed in code
@@ -411,76 +411,25 @@ ylabel(a,'Desnity [kg/m^3]')
 xlabel('Circumfrential Distance [m]')
 ylabel('Distance from End of Chamber [m]')
 
-T_hw_arr_cha(T_hw_arr_cha==0) = NaN;
+T_hw_arr_nozz = T_hw_arr_cha;
+T_hw_arr_nozz(T_hw_arr_nozz==0) = NaN;
 figure()
-s = pcolor(rho_arr_cha);
+s = pcolor(T_hw_arr_nozz);
 s.EdgeColor = 'none';
 a=colorbar;
-title('Chamber Wall Temperature Distribution in Nozzle Loop')
+title('Nozzle Wall Temperature Distribution in Nozzle Loop')
 ylabel(a,'Temperature [K]')
 xlabel('Circumfrential Distance [m]')
 ylabel('Distance from End of Chamber [m]')
 
-%Section 2
-M_hel_arr_cha(M_hel_arr_cha==0) = NaN;
-xscale = linspace(0,100,(size(M_hel_arr_cha,2)-1));
-yscale = linspace(0,100,(size(M_hel_arr_cha,1)-1));
-figure()
-s = pcolor(xscale,yscale,M_hel_arr_cha);
-colorbar
-s.EdgeColor = 'none';
-title('Helium Mach Number Distribution in Nozzle Loop')
-xlabel('Circumfrential Distance [m]')
-ylabel('Distance from End of Chamber [m]')
-a=colorbar;
-ylabel(a,'Mach Number')
 
-P_hel_arr_cha(P_hel_arr_cha==0) = NaN;
-figure()
-s = pcolor(P_hel_arr_cha./1000);
-s.EdgeColor = 'none';
-title('Helium Pressure Distribution in Nozzle Loop')
-a=colorbar;
-ylabel(a,'Pressure [kPa]')
-xlabel('Circumfrential Distance [m]')
-ylabel('Distance from End of Chamber [m]')
+% Plots Graphs
+if chamberGraphs
+    coolinggrapher(M_hel_arr, qdot_arr, T_hw_arr, T_cw_arr, T_hel_arr,...
+        P_hel_arr, Aratio, xplot, A, T_gas, hbartz, Qdot_x, M_x, rho_x,...
+        T_x, V_x, x3, x4, T_hw_arr_cha)
 
-qdot_arr_cha(qdot_arr_cha==0) = NaN;
-figure()
-s = pcolor(qdot_arr_cha);
-s.EdgeColor = 'none';
-a=colorbar;
-title('Steady State Heat Transfer Distribution in Nozzle Loop')
-ylabel(a,'Heat Transfer [W/(m^2-K)]')
-xlabel('Circumfrential Distance [m]')
-ylabel('Distance from End of Chamber [m]')
-
-rho_arr_cha(rho_arr_cha==0) = NaN;
-figure()
-s = pcolor(rho_arr_cha);
-s.EdgeColor = 'none';
-a=colorbar;
-title('Helium Density Distribution in Nozzle Loop')
-ylabel(a,'Desnity [kg/m^3]')
-xlabel('Circumfrential Distance [m]')
-ylabel('Distance from End of Chamber [m]')
-
-T_hw_arr_cha(T_hw_arr_cha==0) = NaN;
-figure()
-s = pcolor(rho_arr_cha);
-s.EdgeColor = 'none';
-a=colorbar;
-title('Chamber Wall Temperature Distribution in Nozzle Loop')
-ylabel(a,'Temperature [K]')
-xlabel('Circumfrential Distance [m]')
-ylabel('Distance from End of Chamber [m]')
-% % Plots Graphs
-% if chamberGraphs
-%     coolinggrapher(M_hel_arr, qdot_arr, T_hw_arr, T_cw_arr, T_hel_arr,...
-%         P_hel_arr, Aratio, xplot, A, T_gas, hbartz, Qdot_x, M_x, rho_x,...
-%         T_x, V_x, x3, x4, T_hw_arr_cha)
-% 
-% end
+end
 
 
 %% Bottom of Script
