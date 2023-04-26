@@ -25,7 +25,7 @@ pressureChamber = 300; %psia
 OF = 2.35;
 mdot_engine = 0.7; %kg/s propellant mass flow rate (iterate this variable?)
 contractionRatio = 3;
-Lstar = .1; %meters, 9.84 in
+Lstar = .4; %meters, 9.84 in
 T_hw = 1088; %K -Inconel X750 Wall Temperature (1500 F)
 tensile = 5.537*10^8; %Pa - Tensile strength at 1088K (1500 F) 
 k_wall = 23; %W/m-K -Nozzle wall made from Inconel X750 @ 1500F
@@ -383,7 +383,7 @@ ylabel(a,'Mach Number')
 
 P_hel_arr_cha(P_hel_arr_cha==0) = NaN;
 figure()
-s = pcolor(P_hel_arr_cha./1000);
+s = pcolor(xscale,yscale,P_hel_arr_cha./1000);
 s.EdgeColor = 'none';
 title('Helium Pressure Distribution in Nozzle Loop')
 a=colorbar;
@@ -393,7 +393,7 @@ ylabel('Distance from End of Chamber [m]')
 
 qdot_arr_cha(qdot_arr_cha==0) = NaN;
 figure()
-s = pcolor(qdot_arr_cha);
+s = pcolor(xscale,yscale,qdot_arr_cha);
 s.EdgeColor = 'none';
 a=colorbar;
 title('Steady State Heat Transfer Distribution in Nozzle Loop')
@@ -403,7 +403,7 @@ ylabel('Distance from End of Chamber [m]')
 
 rho_arr_cha(rho_arr_cha==0) = NaN;
 figure()
-s = pcolor(rho_arr_cha);
+s = pcolor(xscale,yscale,rho_arr_cha);
 s.EdgeColor = 'none';
 a=colorbar;
 title('Helium Density Distribution in Nozzle Loop')
@@ -414,7 +414,7 @@ ylabel('Distance from End of Chamber [m]')
 T_hw_arr_nozz = T_hw_arr_cha;
 T_hw_arr_nozz(T_hw_arr_nozz==0) = NaN;
 figure()
-s = pcolor(T_hw_arr_nozz);
+s = pcolor(xscale,yscale,T_hw_arr_nozz);
 s.EdgeColor = 'none';
 a=colorbar;
 title('Nozzle Wall Temperature Distribution in Nozzle Loop')
