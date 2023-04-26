@@ -15,7 +15,7 @@
 %% Notes for improvements
 % - Multiply Isp by .81 for realistic stuff
 % - Multiply C* by .9 for realistic stuff
-function [isp,cstar,Ae_At_ex,gamma,combustionTemp,cp,conductivity,enthalpy,rho] = PSP_1DOF_CEA_function_wrapper(p_c,p_ex, O_F, filename, debug)
+function [isp,cstar,Ae_At_ex,gamma,combustionTemp,cp,conductivity,enthalpy,rho, prandtl,visc,data_eq] = PSP_1DOF_CEA_function_wrapper(p_c,p_ex, O_F, filename, debug)
 
 %CEA_function_wrapper => This function takes in a chamber pressure, an
 %external pressure and an oxidiser fuel ratio and runs the CEA tool from
@@ -141,14 +141,15 @@ isp = squeeze(data_eq('isp'));
 Ae_At = data_eq('ae/at');
 gamma = data_eq('gammas');
 combustionTemp = data_eq('t');
-cp = squeeze(data_eq('cp'));            % for film cooling analysis
+%cp = squeeze(data_eq('cp'));            % for film cooling analysis
 conductivity = squeeze(data_eq('k'));   % for film cooling analysis
 enthalpy = squeeze(data_eq('h'));       % for film cooling analysis
 rho = squeeze(data_eq('rho'));          % for film cooling analysis
 
 % _______ (some) OTHER OUTPUT OPTIONS
-% prandtl = squeeze(data_eq('prandtl'));% only needed for heat transfer
-% cp = squeeze(data_eq('cp'));          % only needed for heat transfer
+ prandtl = squeeze(data_eq('prandtl'));% only needed for heat transfer
+ cp = squeeze(data_eq('cp'));          % only needed for heat transfer
+ visc = squeeze(data_eq('visc'));
 % gammas = squeeze(data_eq('gammas'));  % only needed for heat transfer
 % ae_at = squeeze(data_eq('ae/at'));    % not wanted at the moment
 % ivac = squeeze(data_eq('ivac'));      % not wanted at the moment
@@ -163,6 +164,7 @@ cp = cp(1);
 conductivity = conductivity(1);
 enthalpy = enthalpy(1);
 rho = rho(1);
-
+prandtl =  prandtl(1);
+visc = visc(1);
 end
 

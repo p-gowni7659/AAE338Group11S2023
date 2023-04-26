@@ -19,7 +19,7 @@ chamberGraphs = 1;
 
 %% Rocket Engine Initialization
 pressureExit = 1; %psia
-pressureChamber = 80; %psia
+pressureChamber = 100; %psia
 OF = 2.35;
 mdot_engine = 0.5; %kg/s propellant mass flow rate (iterate this variable?)
 contractionRatio = 3;
@@ -43,7 +43,7 @@ nameString = strcat('338_estimates_pip_', num2str(int8(pressureChamber / pressur
 inputName = append(nameString, '.inp');
 outputName = append(nameString, '.out');
 
-[Isp, CStar, expansionRatio, specificHeatRatio, combustionTemperature, ~, ~, ~, rho0] = PSP_1DOF_CEA_function_wrapper(pressureChamber,pressureExit, OF, nameString, 0);
+[Isp, CStar, expansionRatio, specificHeatRatio, combustionTemperature, Cpcea, ~, ~, rho0,Prcea,visccea,dataeq] = PSP_1DOF_CEA_function_wrapper(pressureChamber,pressureExit, OF, nameString, 0);
 movefile(inputName, 'INP_OUT');
 movefile(outputName, 'INP_OUT');
 delete(append(pwd, '\PSP_CEA_function_wrapper\', inputName));
@@ -101,9 +101,11 @@ At = (mdot_engine * CStar) / P0; %m^2
 
 Dt = 2 * sqrt(At/pi);
 Dc = sqrt((At * contractionRatio) / pi) * 2;
+Ac = pi* (Dc/2)^2;
 De = sqrt((At * expansionRatio) / pi) * 2;
 
 A = ((At ./ M_x) .* (((2 + (gma - 1) .* M_x .^ 2) ./ (gma + 1)) .^ ((gma + 1) ./ (2 .* (gma - 1)))));
+
 
 x1 = linspace(-contract_L, 0, converge_num);
 x2 = linspace(0, nozzle_L, diverge_num);
@@ -111,19 +113,20 @@ xplot = [x1 x2];
 x3 = linspace(-chamber_L, -contract_L, 5);
 x4 = sqrt(A(1)/pi) * ones(length(x3));
 
+[hgbartz] = hgcalc(gma, visccea, Prcea, Cpcea, Ac/At, 6.205, CStar, Dt);
 %% Helium Initial Conditions/Loop
 %Initial Helium Pressure
 Chambertemp = T_cns; %K
 heltemp_stag = 130;
-helpress_stag = 41e6;
+helpress_stag = 43e6;
 Cp_stag = py.CoolProp.CoolProp.PropsSI("C","T",heltemp_stag,"P", helpress_init,"Helium");
 Cv_stag = py.CoolProp.CoolProp.PropsSI("O","T",heltemp_stag,"P", helpress_init,"Helium");
 gamma_stag = Cp_stag/Cv_stag;
-helmach_init = 0.3;
+helmach_init = 0.2;
 heltemp_init = heltemp_stag / (1+ (((gamma_stag-1)/2) * helmach_init^2)); %K
 helpress_init = helpress_stag / ((1+ (((gamma_stag-1)/2) * helmach_init^2))^(gamma_stag/(gamma_stag-1)));
 
-h_gas = h_g_x(1);
+h_gas = hgbartz;
 k_wall = k;
 wall_thick = chan_t;
 Dh = chan_ID;
