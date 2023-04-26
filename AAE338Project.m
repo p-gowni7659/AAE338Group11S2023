@@ -114,9 +114,15 @@ x4 = sqrt(A(1)/pi) * ones(length(x3));
 %% Helium Initial Conditions/Loop
 %Initial Helium Pressure
 Chambertemp = T_cns; %K
-heltemp_init = 200; %K
-helpress_init = 2e6;%Pa
+heltemp_stag = 130;
+helpress_stag = 41e6;
+Cp_stag = py.CoolProp.CoolProp.PropsSI("C","T",heltemp_stag,"P", helpress_init,"Helium");
+Cv_stag = py.CoolProp.CoolProp.PropsSI("O","T",heltemp_stag,"P", helpress_init,"Helium");
+gamma_stag = Cp_stag/Cv_stag;
 helmach_init = 0.3;
+heltemp_init = heltemp_stag / (1+ (((gamma_stag-1)/2) * helmach_init^2)); %K
+helpress_init = helpress_stag / ((1+ (((gamma_stag-1)/2) * helmach_init^2))^(gamma_stag/(gamma_stag-1)));
+
 h_gas = h_g_x(1);
 k_wall = k;
 wall_thick = 2*chan_t;
