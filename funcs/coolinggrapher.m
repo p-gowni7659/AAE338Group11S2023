@@ -110,3 +110,6 @@ while i < size(T_hw_arr_cha,1)
     plot(linspace(0,1,length(T_hw_arr_cha(i+1,1:(find_zero(1) - 1)))), T_hw_arr_cha(i+1,1:(find_zero(1) - 1)))
     i = i+1;
 end
+xlabel("Normalized Channel Length")
+ylabel("Chamber Side Temperature (K)")
+title("Chamber Side Temperature vs Channel Length", "For Channels in Converging/Diverging Section")
