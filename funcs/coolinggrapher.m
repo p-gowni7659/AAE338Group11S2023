@@ -1,4 +1,4 @@
-function [] = coolinggrapher(M_hel_arr, qdot_arr, T_hw_arr, T_cw_arr, T_hel_arr, P_hel_arr, Aratio, xplot, A, T_gas, h_g_x, Qdot_x, M_x, rho_x, T_x, V_x, x3, x4, T_hw_arr_cha, T_hw)
+function [] = coolinggrapher(M_hel_arr, qdot_arr, T_hw_arr, T_cw_arr, T_hel_arr, P_hel_arr, Aratio, xplot, A, T_gas, h_g_x, Qdot_x, M_x, rho_x, T_x, V_x, x3, x4, T_hw_arr_cha, T_hw, M_hel_arr_cha, P_hel_arr_cha, qdot_arr_cha, rho_arr_cha, T_hw_arr_nozz)
 
 figure()
 
@@ -120,3 +120,50 @@ yline(1088,"LineWidth",3)
 xlabel("Normalized Channel Length")
 ylabel("Chamber Side Temperature [K]")
 title("Chamber Side Temperature vs Channel Length in Nozzle", "For Channels in Converging/Diverging Section")
+
+
+find_zero_new = ones(10000,1);
+for i = 1:size(M_hel_arr_cha,1)
+    find_zero = find(isnan(M_hel_arr_cha(i,:)));
+    if length(find_zero) > length(find_zero_new)
+        find_zero_final = find_zero;
+        i_final = i;
+    end
+    find_zero_new = find_zero;
+end
+figure()
+plot(linspace(0,100,length(M_hel_arr_cha(i_final,1:(find_zero_final(1) - 1)))),M_hel_arr_cha(i_final,1:(find_zero_final(1) - 1)))
+grid on
+xlabel("Normalized Channel Length (%)")
+ylabel("Channel Mach Number")
+title("Mach Number vs Channel Length for Throat")
+
+figure()
+plot(linspace(0,100,length(P_hel_arr_cha(i_final,1:(find_zero_final(1) - 1)))),P_hel_arr_cha(i_final,1:(find_zero_final(1) - 1)) / 1000)
+grid on
+xlabel("Normalized Channel Length (%)")
+ylabel("Channel Pressure (KPa")
+title("Pressure vs Channel Length for Throat")
+
+figure()
+plot(linspace(0,100,length(qdot_arr_cha(i_final,1:(find_zero_final(1) - 1)))),qdot_arr_cha(i_final,1:(find_zero_final(1) - 1)))
+grid on
+xlabel("Normalized Channel Length (%)")
+ylabel("Channel Qdot (W/m^2)")
+title("Qdot vs Channel Length for Throat")
+
+figure()
+plot(linspace(0,100,length(rho_arr_cha(i_final,1:(find_zero_final(1) - 1)))),rho_arr_cha(i_final,1:(find_zero_final(1) - 1)))
+grid on
+xlabel("Normalized Channel Length (%)")
+ylabel("Channel Density (kg/m^3)")
+title("Density vs Channel Length for Throat")
+
+figure()
+plot(linspace(0,100,length(T_hw_arr_nozz(i_final,1:(find_zero_final(1) - 1)))),T_hw_arr_nozz(i_final,1:(find_zero_final(1) - 1)))
+grid on
+xlabel("Normalized Channel Length (%)")
+ylabel("Channel Temperature (K)")
+title("Temperature vs Channel Length for Throat")
+
+
