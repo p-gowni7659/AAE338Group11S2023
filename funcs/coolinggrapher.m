@@ -16,7 +16,7 @@ figure()
 plot(M_hel_arr, T_cw_arr)
 grid on
 xlabel("Mach Number")
-ylabel("Far Side Wall Temperature")
+ylabel("Channel Wall Temperature")
 
 figure()
 plot(M_hel_arr, qdot_arr)

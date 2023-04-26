@@ -23,7 +23,7 @@ chamberGraphs = 1;
 pressureExit = 1; %psia
 pressureChamber = 400; %psia
 OF = 2.35;
-mdot_engine = .05; %kg/s propellant mass flow rate (iterate this variable?)
+mdot_engine = .5; %kg/s propellant mass flow rate (iterate this variable?)
 contractionRatio = 3;
 Lstar = .1; %meters, 9.84 in
 T_hw = 1088; %K -Inconel X750 Wall Temperature (1500 F)
@@ -33,14 +33,14 @@ converge_num = 10000; %points in converging section
 diverge_num = 10000; %points in diverging section
 
 % Channel Initial Conditions
-chan_ID = 0.002; %m (3 mm)
+chan_ID = 0.003; %m (3 mm)
 wall_thick = 0.001;
-cham_chan_loops = 5; %Number of switch backs chamber has
+cham_chan_loops = 1; %Number of switch backs chamber has
 
 %Initial Helium Conditons
 heltemp_init = 130;
-helpress_init = 4.5e6;
-helmach_init = 0.2;
+helpress_init = 50e6;
+helmach_init = 0.4;
 Cp_init = py.CoolProp.CoolProp.PropsSI("C","T",heltemp_init,"P", helpress_init,"Helium");
 Cv_init = py.CoolProp.CoolProp.PropsSI("O","T",heltemp_init,"P", helpress_init,"Helium");
 gamma_init = Cp_init/Cv_init;
@@ -98,9 +98,6 @@ r = Pr ^ (0.33);
 
 T_gas = T_cns .* (1 + (r .* ((gma - 1) ./ 2) .* M_x)) ./ (1 + (((gma - 1) ./ 2) .* M_x));
 
-h_g_x = (rho_x .* V_x) .^ 0.8;
-Qdot_x = h_g_x .* (T_gas - T_hw);
-
 %% Chamber
 At = (mdot_engine * CStar) / P0; %m^2
 
@@ -118,6 +115,11 @@ x2 = linspace(0, nozzle_L, diverge_num);
 xplot = [x1 x2];
 x3 = linspace(-chamber_L, -contract_L, 5);
 x4 = sqrt(A(1)/pi) * ones(length(x3));
+
+hbartz = hgcalc(gma, visccea, Prcea, Cpcea, Ac/At, 6.205, CStar, Dt);
+h_g_x = (rho_x .* V_x) .^ 0.8; %Convection Coefficent Correlation
+h_g_x = hbartz/h_g_x(1)*h_g_x;
+Qdot_x = h_g_x .* (T_gas - T_hw);
 
 Thrust = mdot_engine*V_x(end) + pressureExit*A(end);
 
