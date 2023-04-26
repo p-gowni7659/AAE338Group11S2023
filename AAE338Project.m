@@ -84,7 +84,7 @@ r = Pr ^ (0.33);
 
 T_gas = T_cns .* (1 + (r .* ((gma - 1) ./ 2) .* M_x)) ./ (1 + (((gma - 1) ./ 2) .* M_x));
 
-h_g_x = (rho_x .* V_x) .^ 0.8;
+h_g_x = 47.86*(rho_x .* V_x) .^ 0.8; %Convective Heat Coefficent Correlation
 Qdot_x = h_g_x .* (T_gas - T_hw);
 %This Qdot_x must be matched by the regenerative cooling from gas(rayliegh flow)
 
