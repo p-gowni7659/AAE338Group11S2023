@@ -38,8 +38,8 @@ figure()
 plot(linspace(0,100,length(T_hel_arr)), qdot_arr)
 grid on
 xlabel("Distance Normalized to Loop Length (%)")
-ylabel("Specific heat transfer [W/(m^2)]")
-title("Steady State Heat Transfer Distribution in Chamber Loop")
+ylabel("Heat Flux [W/(m^2)]")
+title("Steady State Heat Flux Distribution in Chamber Loop")
 
 figure()
 plot(linspace(0,100,length(T_hel_arr)), P_hel_arr./1000)
@@ -162,8 +162,8 @@ figure()
 plot(linspace(0,100,length(qdot_arr_cha(i_final,1:(find_zero_final(1) - 1)))),qdot_arr_cha(i_final,1:(find_zero_final(1) - 1)))
 grid on
 xlabel("Normalized Channel Length (%)")
-ylabel("Channel Qdot (W/m^2)")
-title("Qdot vs Channel Length for Throat")
+ylabel("Channel Heat Flux (W/m^2)")
+title("Heat Flux vs Channel Length for Throat")
 
 figure()
 plot(linspace(0,100,length(rho_arr_cha(i_final,1:(find_zero_final(1) - 1)))),rho_arr_cha(i_final,1:(find_zero_final(1) - 1)))
